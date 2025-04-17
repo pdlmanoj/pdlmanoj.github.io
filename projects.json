@@ -1,18 +1,18 @@
 {
   "projects": [
     {
-      "id": "housing-price-prediction",
-      "title": "Housing Price Prediction",
-      "description": "Built a machine learning model to predict housing prices in Boston using the scikit-learn library. Implemented multiple regression algorithms and compared their performance.",
-      "githubUrl": "https://github.com/yourusername/housing-price-prediction",
-      "liveUrl": ""
-    },
-    {
-      "id": "check-project",
-      "title": "Random Project",
-      "description": "Built a time series forecasting model using LSTM neural networks to predict stock prices. Implemented backtesting to evaluate model performance.",
-      "githubUrl": "https://github.com/yourusername/stock-prediction",
-      "liveUrl": "https://yourusername.github.io/stock-predictor"
-    }
+  "id": "laptop-price-prediction",
+  "title": "Laptop Price Prediction",
+  "description": "Built as part of a college assignment, this project uses R to predict laptop prices based on specifications. Performed data cleaning, EDA, and regression modeling to identify factors affecting price.",
+  "githubUrl": "https://github.com/pdlmanoj/Laptop-Price-Prediction",
+  "liveUrl": ""
+  },
+  {
+  "id": "heart-disease-prediction",
+  "title": "Heart Disease Prediction",
+  "description": "Completed as part of a college assignment, this project involved building a heart disease prediction model using R. Utilized statistical analysis and classification techniques to explore medical data and identify key risk indicators.",
+  "githubUrl": "https://github.com/pdlmanoj/Heart-Disease-Prediction",
+  "liveUrl": ""
+  }
   ]
 }
