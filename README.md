@@ -1,4 +1,4 @@
-# Data Science Portfolio Website
+# Portfolio Website
 
 A simple, clean, and responsive portfolio website for showcasing your data science projects and sharing blog posts. This website is designed to be easy to maintain, even for beginners.
 
@@ -43,7 +43,7 @@ Edit the `projects.json` file to add your own projects:
       "title": "Your Project Title",
       "description": "A brief description of your project.",
       "githubUrl": "https://github.com/yourusername/your-project",
-      "liveUrl": "https://your-live-demo-url.com" // Optional
+      "liveUrl": "https://your-live-demo-url.com"
     },
     // Add more projects...
   ]
@@ -71,43 +71,13 @@ Edit the `blogs/index.json` file to include your new blog post:
       "date": "YYYY-MM-DD",
       "filename": "my-new-post.md",
       "preview": "A brief preview or summary of your blog post.",
-      "tags": ["Tag1", "Tag2", "Tag3"] // Optional
+      "tags": ["Tag1", "Tag2", "Tag3"]
     },
     // Add more posts...
   ]
 }
 ```
 
-### 5. Deploy to GitHub Pages
-
-1. Go to your GitHub repository settings
-2. Scroll down to the GitHub Pages section
-3. Select the branch you want to deploy (usually `main` or `master`)
-4. Click Save
-5. Your website will be available at `https://yourusername.github.io/repository-name/`
-
-## Customization
-
-### Changing Colors
-
-You can customize the color scheme by editing the CSS variables in `assets/css/styles.css`:
-
-```css
-:root {
-  --primary-color: #3498db; /* Change this to your preferred primary color */
-  --secondary-color: #2c3e50; /* Change this to your preferred secondary color */
-  /* Other color variables... */
-}
-```
-
-### Adding More Pages
-
-To add a new page:
-
-1. Create a new HTML file (e.g., `contact.html`)
-2. Copy the header and footer structure from an existing page
-3. Add your content in the `<main>` section
-4. Update the navigation links in all HTML files to include your new page
 
 ## Markdown Guide for Blog Posts
 
@@ -143,19 +113,3 @@ This is a code block
 ```
 ```
 
-## Browser Compatibility
-
-This website is compatible with:
-- Chrome
-- Firefox
-- Safari
-- Edge
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Acknowledgments
-
-- Font Awesome for icons
-- Marked.js for Markdown parsing
