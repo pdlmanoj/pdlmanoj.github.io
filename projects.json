@@ -1,0 +1,18 @@
+{
+  "projects": [
+    {
+      "id": "housing-price-prediction",
+      "title": "Housing Price Prediction",
+      "description": "Built a machine learning model to predict housing prices in Boston using the scikit-learn library. Implemented multiple regression algorithms and compared their performance.",
+      "githubUrl": "https://github.com/yourusername/housing-price-prediction",
+      "liveUrl": ""
+    },
+    {
+      "id": "check-project",
+      "title": "Random Project",
+      "description": "Built a time series forecasting model using LSTM neural networks to predict stock prices. Implemented backtesting to evaluate model performance.",
+      "githubUrl": "https://github.com/yourusername/stock-prediction",
+      "liveUrl": "https://yourusername.github.io/stock-predictor"
+    }
+  ]
+}
