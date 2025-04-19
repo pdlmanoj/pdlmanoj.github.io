@@ -347,6 +347,10 @@ h1 {
   padding: 2rem;
   border-radius: 5px;
   box-shadow: var(--shadow);
+  width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
 }
 
 .blog-post-header {
@@ -357,6 +361,7 @@ h1 {
 
 .blog-post-content {
   line-height: 1.8;
+  font-size: 1rem;
 }
 
 .blog-post-content h2 {
@@ -381,6 +386,7 @@ h1 {
   border-radius: 5px;
   overflow-x: auto;
   margin-bottom: 1.5rem;
+  white-space: pre-wrap;
 }
 
 .blog-post-content img {
@@ -452,48 +458,171 @@ footer {
 @media screen and (max-width: 768px) {
   .nav-links {
     position: absolute;
-    right: 0;
-    top: 70px;
-    height: calc(100vh - 70px);
     background-color: white;
+    top: 70px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: auto;
+    padding: 20px 0;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-    width: 50%;
-    transform: translateX(100%);
-    transition: var(--transition);
-    z-index: 100;
-    box-shadow: -5px 0 10px rgba(0, 0, 0, 0.1);
+    display: none;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   }
 
   .nav-links.active {
-    transform: translateX(0);
+    display: flex;
   }
 
   .nav-links li {
-    padding: 1.5rem;
+    margin: 10px 0;
     width: 100%;
     text-align: center;
   }
 
   .burger {
     display: block;
+    cursor: pointer;
   }
 
-  .cta-buttons {
-    flex-direction: column;
-    align-items: center;
+  .burger div {
+    width: 25px;
+    height: 3px;
+    background-color: var(--secondary-color);
+    margin: 5px;
+    transition: all 0.3s ease;
   }
 
-  .search-container {
+  .burger.toggle .line1 {
+    transform: rotate(-45deg) translate(-5px, 6px);
+  }
+
+  .burger.toggle .line2 {
+    opacity: 0;
+  }
+
+  .burger.toggle .line3 {
+    transform: rotate(45deg) translate(-5px, -6px);
+  }
+}
+
+/* Blog Post Page - Mobile Improvements */
+.blog-post {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 5px;
+  box-shadow: var(--shadow);
+  width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.blog-post-content {
+  line-height: 1.8;
+  font-size: 1rem;
+  max-width: 100%;
+}
+
+.blog-post-content h2,
+.blog-post-content h3,
+.blog-post-content h4 {
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.blog-post-content p,
+.blog-post-content ul,
+.blog-post-content ol {
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.blog-post-content li {
+  margin-left: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+  .blog-post {
+    padding: 1rem;
+    margin: 0;
+    border-radius: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .blog-post-header h1 {
+    font-size: 1.5rem;
+    word-wrap: break-word;
+  }
+  
+  .blog-post-content {
+    font-size: 0.95rem;
+  }
+  
+  .blog-post-content h2 {
+    font-size: 1.3rem;
+  }
+  
+  .blog-post-content h3 {
+    font-size: 1.2rem;
+  }
+  
+  .blog-post-content ol,
+  .blog-post-content ul {
+    padding-left: 1rem;
+  }
+  
+  main {
+    padding: 0.5rem;
+  }
+  
+  section {
+    padding: 0.5rem;
+  }
+  
+  .blog-container {
+    padding: 0;
     width: 100%;
   }
+}
 
-  #blog-search {
-    width: 70%;
-  }
+/* Fix horizontal scrolling issues */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
 
-  .projects-grid {
-    grid-template-columns: 1fr;
-  }
+/* Ensure numbered lists display properly */
+.blog-post-content ol {
+  list-style-position: inside;
+  padding-left: 0;
+}
+
+.blog-post-content ol li {
+  padding-left: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Ensure tables don't break layout on mobile */
+.blog-post-content table {
+  width: 100%;
+  overflow-x: auto;
+  display: block;
+}
+
+/* Improve code block readability on mobile */
+.blog-post-content pre {
+  padding: 0.75rem;
+  font-size: 0.9rem;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  overflow-x: auto;
+  margin-bottom: 1.5rem;
+  white-space: pre-wrap;
 }
