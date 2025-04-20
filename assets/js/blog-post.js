@@ -74,7 +74,17 @@ async function fetchBlogPost() {
       <div class="blog-post-content">
         ${htmlContent}
       </div>
+      <div class="blog-comments">
+        <h2>Comments</h2>
+        <div id="utterances-container">
+          <p class="loading-comments">Loading comments...</p>
+        </div>
+        <p class="comment-help">Comments are specific to this blog post and powered by <a href="https://utteranc.es" target="_blank">Utterances</a>. Comments are stored as GitHub issues. You'll need to authorize with GitHub to comment.</p>
+      </div>
     `;
+
+    // Add Utterances comment section
+    loadUtterancesComments(postId);
   } catch (error) {
     console.error('Error loading blog post:', error);
     blogPostContainer.innerHTML = `
@@ -85,6 +95,45 @@ async function fetchBlogPost() {
       </div>
     `;
   }
+}
+
+/**
+ * Function to load Utterances comments
+ * @param {string} postId - The blog post ID
+ */
+function loadUtterancesComments(postId) {
+  // Remove any existing script to avoid duplicates
+  const existingScript = document.getElementById('utterances-script');
+  if (existingScript) {
+    existingScript.remove();
+  }
+
+  // Create the script element
+  const script = document.createElement('script');
+  script.id = 'utterances-script';
+  script.src = 'https://utteranc.es/client.js';
+  // Make sure this exactly matches your GitHub username and repository name
+  script.setAttribute('repo', 'pdlmanoj/pdlmanoj.github.io');
+  // Use the specific blog post ID to ensure comments are unique to each post
+  script.setAttribute('issue-term', `blogpost-${postId}`);
+  script.setAttribute('theme', 'github-light');
+  script.setAttribute('crossorigin', 'anonymous');
+  script.async = true;
+
+  // Append the script to the container
+  const container = document.getElementById('utterances-container');
+  if (container) {
+    console.log('Loading Utterances comments for post ID:', postId);
+    container.appendChild(script);
+  } else {
+    console.error('Utterances container not found');
+  }
+
+  // Add error handling for the script
+  script.onerror = function() {
+    console.error('Failed to load Utterances script');
+    container.innerHTML = '<p>Failed to load comments. Please check your console for errors.</p>';
+  };
 }
 
 // Initialize blog post
