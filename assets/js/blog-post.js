@@ -74,17 +74,106 @@ async function fetchBlogPost() {
       <div class="blog-post-content">
         ${htmlContent}
       </div>
-      <div class="blog-comments">
+      <div id="comments" class="blog-comments">
         <h2>Comments</h2>
-        <div id="utterances-container">
-          <p class="loading-comments">Loading comments...</p>
-        </div>
-        <p class="comment-help">Comments are specific to this blog post and powered by <a href="https://utteranc.es" target="_blank">Utterances</a>. Comments are stored as GitHub issues. You'll need to authorize with GitHub to comment.</p>
+        <div id="giscus-container" class="giscus-container"></div>
       </div>
     `;
 
-    // Add Utterances comment section
-    loadUtterancesComments(postId);
+    // Get the comments section
+    const commentsSection = document.getElementById('comments');
+    const giscusContainer = document.getElementById('giscus-container');
+
+    // Use Intersection Observer to lazy load Giscus only when scrolled into view
+    const loadGiscusComments = () => {
+      // Create the Giscus script with optimized settings
+      const giscusScript = document.createElement('script');
+      giscusScript.src = 'https://giscus.app/client.js';
+      giscusScript.setAttribute('data-repo', 'pdlmanoj/pdlmanoj.github.io');
+      giscusScript.setAttribute('data-repo-id', 'R_kgDOObQeYA'); // Replace with your actual repo ID
+      giscusScript.setAttribute('data-category', 'Announcements');
+      giscusScript.setAttribute('data-category-id', 'DIC_kwDOObQeYM4CpRvV'); // Replace with your actual category ID
+      giscusScript.setAttribute('data-mapping', 'specific');
+      giscusScript.setAttribute('data-term', `blog-${postId}`); // Use the post ID as a unique identifier
+      giscusScript.setAttribute('data-strict', '0');
+
+      // Enable reactions as requested
+      giscusScript.setAttribute('data-reactions-enabled', '1'); // Enable reactions
+      giscusScript.setAttribute('data-emit-metadata', '0');
+      giscusScript.setAttribute('data-input-position', 'top');
+      giscusScript.setAttribute('data-theme', 'light');
+      giscusScript.setAttribute('data-lang', 'en');
+
+      // Performance attributes
+      giscusScript.setAttribute('data-loading', 'lazy');
+      giscusScript.setAttribute('crossorigin', 'anonymous');
+      giscusScript.async = true;
+      giscusScript.defer = true; // Add defer for non-blocking loading
+
+      // Add error handling
+      giscusScript.onerror = () => {
+        // Show error message if Giscus fails to load
+        giscusContainer.innerHTML = `
+          <div class="comments-error">
+            <p>Unable to load comments. Please check your internet connection or try again later.</p>
+            <button id="retry-comments" class="retry-btn">Retry</button>
+          </div>
+        `;
+
+        // Add retry button functionality
+        const retryBtn = document.getElementById('retry-comments');
+        if (retryBtn) {
+          retryBtn.addEventListener('click', () => {
+            giscusContainer.innerHTML = ''; // Clear the container
+            loadGiscusComments();
+          });
+        }
+      };
+
+      // Append the script to the giscus container
+      giscusContainer.appendChild(giscusScript);
+    };
+
+    // No loading message, direct loading from Giscus
+    giscusContainer.innerHTML = '';
+
+    // Preload the Giscus script to speed up loading
+    const preloadLink = document.createElement('link');
+    preloadLink.rel = 'preload';
+    preloadLink.href = 'https://giscus.app/client.js';
+    preloadLink.as = 'script';
+    document.head.appendChild(preloadLink);
+
+    // Use Intersection Observer for optimized lazy loading
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            loadGiscusComments();
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        rootMargin: '200px', // Increased to 200px to load earlier
+        threshold: 0.1 // Start loading when 10% of the element is visible
+      });
+
+      observer.observe(commentsSection);
+
+      // Set a timeout to load comments anyway if they haven't loaded after 3 seconds
+      // This helps on long pages where the user might not scroll to comments immediately
+      setTimeout(() => {
+        if (!giscusContainer.querySelector('iframe')) {
+          loadGiscusComments();
+          if (observer) {
+            observer.disconnect();
+          }
+        }
+      }, 3000);
+    } else {
+      // Fallback for browsers that don't support IntersectionObserver
+      loadGiscusComments();
+    }
   } catch (error) {
     console.error('Error loading blog post:', error);
     blogPostContainer.innerHTML = `
@@ -95,45 +184,6 @@ async function fetchBlogPost() {
       </div>
     `;
   }
-}
-
-/**
- * Function to load Utterances comments
- * @param {string} postId - The blog post ID
- */
-function loadUtterancesComments(postId) {
-  // Remove any existing script to avoid duplicates
-  const existingScript = document.getElementById('utterances-script');
-  if (existingScript) {
-    existingScript.remove();
-  }
-
-  // Create the script element
-  const script = document.createElement('script');
-  script.id = 'utterances-script';
-  script.src = 'https://utteranc.es/client.js';
-  // Make sure this exactly matches your GitHub username and repository name
-  script.setAttribute('repo', 'pdlmanoj/pdlmanoj.github.io');
-  // Use the specific blog post ID to ensure comments are unique to each post
-  script.setAttribute('issue-term', `blogpost-${postId}`);
-  script.setAttribute('theme', 'github-light');
-  script.setAttribute('crossorigin', 'anonymous');
-  script.async = true;
-
-  // Append the script to the container
-  const container = document.getElementById('utterances-container');
-  if (container) {
-    console.log('Loading Utterances comments for post ID:', postId);
-    container.appendChild(script);
-  } else {
-    console.error('Utterances container not found');
-  }
-
-  // Add error handling for the script
-  script.onerror = function() {
-    console.error('Failed to load Utterances script');
-    container.innerHTML = '<p>Failed to load comments. Please check your console for errors.</p>';
-  };
 }
 
 // Initialize blog post

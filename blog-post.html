@@ -7,6 +7,26 @@
   <meta name="description" content="Blog post">
   <title>Blog Post | Portfolio</title>
   <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+
+  <!-- Preconnect and prefetch for faster loading -->
+  <link rel="preconnect" href="https://giscus.app">
+  <link rel="dns-prefetch" href="https://giscus.app">
+  <link rel="preload" href="https://giscus.app/client.js" as="script">
+
+  <link rel="preconnect" href="https://github.com" crossorigin>
+  <link rel="dns-prefetch" href="https://github.com">
+
+  <link rel="preconnect" href="https://api.github.com" crossorigin>
+  <link rel="dns-prefetch" href="https://api.github.com">
+
+  <!-- Preconnect to GitHub assets domains -->
+  <link rel="preconnect" href="https://avatars.githubusercontent.com" crossorigin>
+  <link rel="dns-prefetch" href="https://avatars.githubusercontent.com">
+
+  <!-- Reduce GitHub API latency -->
+  <link rel="preconnect" href="https://github.githubassets.com" crossorigin>
+  <link rel="dns-prefetch" href="https://github.githubassets.com">
+
   <link rel="stylesheet" href="assets/css/styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -34,45 +54,10 @@
         <!-- Blog post will be loaded dynamically -->
         <div class="loading">Loading blog post...</div>
       </div>
-
-      <!-- Static fallback for comments -->
-      <div id="static-comments" class="blog-comments" style="display: none;">
-        <h2>Comments</h2>
-        <div id="static-utterances-container">
-          <!-- Direct script tag as final fallback -->
-          <!-- This script will be replaced dynamically with the correct post ID -->
-          <div class="utterances-placeholder">Loading comments...</div>
-        </div>
-        <p class="comment-help">Comments are specific to this blog post and powered by <a href="https://utteranc.es" target="_blank">Utterances</a>. Comments are stored as GitHub issues. You'll need to authorize with GitHub to comment.</p>
-      </div>
-
       <div class="back-to-blogs">
         <br>
         <a href="blog.html"><i class="fas fa-arrow-left"></i> Back to all blogs</a>
-        <button id="show-comments-btn" class="cta-btn secondary" style="margin-left: 20px; display: none;">Show Comments</button>
       </div>
-
-      <script>
-        // Add a button to manually show comments if they don't load automatically
-        document.addEventListener('DOMContentLoaded', function() {
-          setTimeout(function() {
-            const dynamicComments = document.querySelector('.utterances');
-            const showCommentsBtn = document.getElementById('show-comments-btn');
-
-            if (!dynamicComments && showCommentsBtn) {
-              showCommentsBtn.style.display = 'inline-block';
-
-              showCommentsBtn.addEventListener('click', function() {
-                const staticComments = document.getElementById('static-comments');
-                if (staticComments) {
-                  staticComments.style.display = 'block';
-                  showCommentsBtn.style.display = 'none';
-                }
-              });
-            }
-          }, 6000);
-        });
-      </script>
     </section>
   </main>
 
@@ -83,9 +68,6 @@
   <script src="assets/js/main.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="assets/js/blog-post.js"></script>
-  <script src="assets/js/utterances-debug.js"></script>
-  <script src="assets/js/utterances-fallback.js"></script>
-  <script src="assets/js/static-utterances.js"></script>
 </body>
 
 </html>

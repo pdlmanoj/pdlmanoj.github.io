@@ -353,37 +353,6 @@ h1 {
   hyphens: auto;
 }
 
-/* Comments Section */
-.blog-comments {
-  margin-top: 3rem;
-  padding-top: 2rem;
-  border-top: 1px solid var(--border-color);
-}
-
-.blog-comments h2 {
-  margin-bottom: 1.5rem;
-  color: var(--secondary-color);
-}
-
-#utterances-container {
-  width: 100%;
-  min-height: 150px;
-}
-
-.loading-comments {
-  color: var(--grey-color);
-  font-style: italic;
-  text-align: center;
-  padding: 1rem 0;
-}
-
-.comment-help {
-  margin-top: 1rem;
-  font-size: 0.9rem;
-  color: var(--grey-color);
-  text-align: center;
-}
-
 .blog-post-header {
   margin-bottom: 2rem;
   border-bottom: 1px solid var(--border-color);
@@ -425,6 +394,80 @@ h1 {
   height: auto;
   margin: 1rem 0;
   border-radius: 5px;
+}
+
+/* Comments Section */
+.blog-comments {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.blog-comments h2 {
+  margin-bottom: 1.5rem;
+  color: var(--secondary-color);
+  font-size: 1.5rem;
+}
+
+/* Simple loading text for comments */
+.simple-loading-text {
+  text-align: center;
+  padding: 1rem;
+  color: var(--grey-color);
+  font-style: italic;
+}
+
+/* Error message styling */
+.comments-error {
+  background-color: rgba(231, 76, 60, 0.1);
+  border-left: 3px solid var(--accent-color);
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 3px;
+}
+
+.comments-error p {
+  margin-bottom: 1rem;
+  color: var(--text-color);
+}
+
+.retry-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: var(--transition);
+}
+
+.retry-btn:hover {
+  background-color: var(--secondary-color);
+}
+
+/* Giscus container and styling overrides */
+.giscus-container {
+  min-height: 150px; /* Reserve space for comments to prevent layout shifts */
+  width: 100%;
+}
+
+.giscus {
+  margin-top: 1rem;
+  width: 100%;
+  transition: opacity 0.3s ease;
+}
+
+/* Add optimizations for faster loading */
+.giscus-frame {
+  transition: opacity 0.5s ease;
+  width: 100% !important;
+  border: none !important;
+}
+
+/* Hide the GitHub corner icon to improve performance */
+.giscus [data-repo-corner] {
+  display: none !important;
 }
 
 /* Projects Styles */
@@ -585,6 +628,16 @@ footer {
     border-radius: 0;
     width: 100%;
     box-sizing: border-box;
+  }
+
+  .blog-comments {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+  }
+
+  .blog-comments h2 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
   }
 
   .blog-post-header h1 {
