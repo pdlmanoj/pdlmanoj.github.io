@@ -1,0 +1,14 @@
+/* Utility Classes */
+
+/* Font weight utility classes */
+.font-regular {
+  font-weight: 400;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.font-bold {
+  font-weight: 700;
+}

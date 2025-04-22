@@ -9,6 +9,7 @@ There are several reasons why Python has become the dominant language in data sc
 3. **Large community**: Python has a vast and active community, which means plenty of resources, tutorials, and support.
 4. **Versatility**: Python can be used not just for data analysis but also for web development, automation, and more.
 
+
 ## Setting Up Your Environment
 
 ### 1. Install Python
@@ -48,7 +49,7 @@ pip install numpy pandas matplotlib scikit-learn jupyter
 # With conda
 conda install numpy pandas matplotlib scikit-learn jupyter
 ```
-
+![Diagram explaining the concept](blogs/images/img1.png)
 ## Your First Data Analysis Project
 
 Let's create a simple data analysis script. Create a file named `analysis.py`:
@@ -81,6 +82,24 @@ plt.show()
 ```
 
 Run the script, and you'll get statistics about your sales data and a nice bar chart visualization!
+
+
+<!-- Add a collapsible section -->
+<details>
+<summary>Click to expand for more details</summary>
+
+This content will be hidden until the reader clicks to expand it.
+</details>
+
+<!-- Add a callout box -->
+> **Note:** This is a callout box for important information
+> that you want to highlight to your readers.
+
+<!-- Add a table -->
+| Feature | Description |
+|---------|-------------|
+| Item 1  | Details about item 1 |
+| Item 2  | Details about item 2 |
 
 ## Next Steps
 

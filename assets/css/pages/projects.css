@@ -1,0 +1,36 @@
+/* Projects Styles */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.project-title {
+  padding: 1rem;
+  font-size: 1.3rem;
+  color: var(--secondary-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.project-description {
+  padding: 1rem;
+  color: var(--text-color);
+}
+
+.project-links {
+  display: flex;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+.project-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+.project-link i {
+  font-size: 1.2rem;
+}

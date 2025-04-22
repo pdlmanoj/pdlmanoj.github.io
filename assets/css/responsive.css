@@ -1,0 +1,17 @@
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  /* General responsive adjustments */
+  main {
+    padding: 0;
+  }
+
+  section {
+    padding: 0;
+  }
+
+  /* Fix horizontal scrolling issues */
+  html, body {
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+}

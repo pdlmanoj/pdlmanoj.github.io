@@ -1,16 +1,16 @@
 {
   "posts": [
     {
-      "id": "getting-started-with-python-for-data-science",
-      "title": "Getting Started with Python for Data Science",
+      "id": "sample-blog-post",
+      "title": "Sample blog post",
       "date": "2023-01-15",
-      "filename": "getting-started-with-python.md",
+      "filename": "sample-blog-post.md",
       "preview": "Python is the most popular language for data science. Learn how to set up your environment and start your data science journey.",
       "tags": ["Python", "Beginners", "Data Science"]
     },
     {
       "id": "new-blog",
-      "title": "Introduction",
+      "title": "Image Reference Example",
       "date": "2025-04-04",
       "filename": "new-blog.md",
       "preview": "Trail.",

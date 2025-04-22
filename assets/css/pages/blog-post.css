@@ -1,0 +1,699 @@
+/* Blog Post Page */
+.blog-layout {
+  display: flex;
+  gap: 0;
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.blog-sidebar {
+  width: 240px; /* Reduced from 280px */
+  flex-shrink: 0;
+  position: fixed;
+  top: 80px; /* Adjust based on your navbar height */
+  height: calc(100vh - 100px);
+  overflow-y: auto;
+  padding-right: 10px;
+  scrollbar-width: thin;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-right: 1px solid var(--border-color);
+  margin-right: 1rem;
+  background-color: var(--light-color);
+  z-index: 100;
+  left: 0; /* Ensure it's aligned to the left */
+}
+
+.blog-sidebar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.blog-sidebar::-webkit-scrollbar-thumb {
+  background-color: var(--border-color);
+  border-radius: 5px;
+}
+
+.blog-main-content {
+  flex: 1;
+  min-width: 0; /* Prevent flex items from overflowing */
+  margin-left: 240px; /* Match the new sidebar width */
+  max-width: calc(100% - 240px); /* Ensure it takes the full remaining width */
+  padding: 0 20px; /* Add some padding */
+}
+
+.blog-post {
+  background-color: var(--light-color);
+  padding: 2rem;
+  border-radius: 5px;
+  box-shadow: none;
+  width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+  max-width: 100%; /* Use 100% of the available width */
+  margin: 0 auto; /* Center the content */
+}
+
+/* Table of Contents Styles */
+.blog-toc {
+  background-color: var(--light-color);
+  border-radius: 5px;
+  padding: 0.5rem 0;
+  font-size: 0.95rem;
+  position: relative;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.sidebar-title {
+  font-weight: 500;
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem 0.5rem 0.5rem;
+  color: var(--text-color);
+  font-size: 0.9rem;
+}
+
+/* Vertical line for TOC */
+.toc-content {
+  position: relative;
+}
+
+.toc-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 10px;
+  width: 1px;
+  background-color: var(--border-color);
+  z-index: 0;
+}
+
+.toc-header {
+  font-weight: 500; /* Using Inter's medium weight */
+  margin-bottom: 0.8rem;
+  color: var(--secondary-color);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.toc-toggle-icon {
+  font-size: 0.8rem;
+  color: var(--grey-color);
+  transition: transform 0.3s ease;
+}
+
+.toc-content {
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  overflow: hidden;
+  max-height: 1000px; /* Arbitrary large value */
+  opacity: 1;
+}
+
+.toc-content.collapsed {
+  max-height: 0;
+  opacity: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.toc-list, .toc-sublist {
+  list-style-type: none;
+  padding-left: 0;
+  margin-bottom: 0;
+}
+
+.toc-sublist {
+  padding-left: 1.2rem;
+  margin-top: 0.3rem;
+}
+
+.toc-item {
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.toc-link {
+  color: var(--text-color);
+  text-decoration: none;
+  display: block;
+  transition: color 0.2s ease, background-color 0.2s ease;
+  padding: 0.25rem 0.4rem 0.25rem 1.6rem;
+  margin: 0.15rem 0;
+  position: relative;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+/* Vertical line indicator for active TOC items */
+.toc-link::before {
+  content: '';
+  position: absolute;
+  left: 10px;
+  top: 0;
+  height: 100%;
+  width: 2px;
+  background-color: transparent;
+  z-index: 1;
+  transition: background-color 0.2s ease;
+}
+
+.toc-link.has-children::after {
+  /* Removed the chevron icon */
+  content: '';
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.8rem;
+  color: var(--grey-color);
+  transition: transform 0.3s ease;
+}
+
+.toc-item.active > .toc-link.has-children::after,
+.toc-link.has-children.active::after {
+  color: var(--primary-color);
+}
+
+.toc-link:hover {
+  color: var(--primary-color);
+}
+
+.toc-link:hover::before {
+  background-color: var(--primary-color);
+}
+
+.toc-link.active {
+  color: var(--primary-color);
+  font-weight: 500;
+}
+
+.toc-link.active::before {
+  background-color: var(--primary-color);
+}
+
+.toc-sublist {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.toc-sublist.expanded {
+  max-height: 1000px;
+  opacity: 1;
+  margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
+}
+
+/* Indentation for different heading levels */
+.toc-level-3 > .toc-link {
+  padding-left: 2.8rem;
+}
+
+.toc-level-3 > .toc-link::before {
+  left: 10px; /* Keep the vertical line in the same place */
+}
+
+.toc-level-4 > .toc-link {
+  padding-left: 3.8rem;
+}
+
+.toc-level-4 > .toc-link::before {
+  left: 10px;
+}
+
+.toc-level-5 > .toc-link {
+  padding-left: 4.8rem;
+}
+
+.toc-level-5 > .toc-link::before {
+  left: 10px;
+}
+
+.toc-level-6 > .toc-link {
+  padding-left: 5.8rem;
+}
+
+.toc-level-6 > .toc-link::before {
+  left: 10px;
+}
+
+.blog-post-header {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1rem;
+  background-color: var(--light-color);
+  width: 100%;
+}
+
+.blog-post-header h1 {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: manual;
+  max-width: 100%;
+}
+
+.blog-post-content {
+  line-height: 1.8;
+  font-size: 1rem; /* Slightly reduced from 1.05rem */
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  letter-spacing: -0.011em;
+  background-color: var(--light-color);
+  color: #2d3748;
+  max-width: 100%;
+  margin: 0 auto;
+  /* Disable hyphenation */
+  hyphens: none;
+  -webkit-hyphens: none;
+  -ms-hyphens: none;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+.blog-post-content h1 {
+  font-size: 2.2rem; /* Added explicit h1 size */
+  margin: 2.5rem 0 1.5rem 0;
+  color: var(--secondary-color);
+  font-weight: 700;
+}
+
+.blog-post-content h2 {
+  font-size: 1.6rem; /* Reduced from 1.8rem */
+  margin: 2.5rem 0 1.2rem 0;
+  color: var(--secondary-color);
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+  font-weight: 600;
+}
+
+.blog-post-content h3 {
+  font-size: 1.35rem; /* Reduced from 1.5rem */
+  margin: 2rem 0 1rem 0;
+  color: var(--secondary-color);
+  font-weight: 600;
+}
+
+.blog-post-content h4 {
+  font-size: 1.15rem; /* Reduced from 1.25rem */
+  margin: 1.5rem 0 0.8rem 0;
+  color: var(--secondary-color);
+  font-weight: 600;
+}
+
+.blog-post-content p {
+  margin-bottom: 1.5rem;
+  max-width: 100%;
+  line-height: 1.9;
+  font-size: 1.05rem;
+  text-align: justify;
+}
+
+.blog-post-content ul,
+.blog-post-content ol {
+  margin-bottom: 1.5rem;
+  padding-left: 1.5rem;
+}
+
+.blog-post-content li {
+  margin-bottom: 0.5rem;
+}
+
+/* Inline code */
+.blog-post-content code {
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 0.2rem 0.4rem;
+  border-radius: 3px;
+  font-family: 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace;
+  font-size: 0.9em;
+  color: #383a42;
+}
+
+/* Code blocks */
+.blog-post-content pre {
+  background-color: #f5f5f5; /* Light gray background for code blocks */
+  padding: 1rem;
+  border-radius: 5px;
+  overflow-x: auto;
+  margin-bottom: 1.5rem;
+  box-shadow: none;
+  position: relative; /* For positioning the copy button */
+  border: none;
+}
+
+/* Copy code button */
+.copy-code-button {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background-color: transparent;
+  color: #999;
+  border: none;
+  border-radius: 4px;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  opacity: 0;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.blog-post-content pre:hover .copy-code-button {
+  opacity: 1;
+}
+
+.copy-code-button:hover {
+  color: #666;
+}
+
+.copy-code-button:active {
+  color: #333;
+}
+
+.copy-code-button.copied {
+  color: #28a745;
+}
+
+.copy-code-button.error {
+  color: #e74c3c;
+}
+
+/* Code inside pre blocks */
+.blog-post-content pre code {
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+  font-family: 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace;
+  font-size: 0.9em;
+  color: #333; /* Dark text for light background */
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  line-height: 1.5;
+  tab-size: 4;
+}
+
+/* Custom syntax highlighting colors to match the desired style */
+.blog-post-content pre code.language-bash,
+.blog-post-content pre code.language-sh,
+.blog-post-content pre code.language-shell,
+.blog-post-content pre code.language-console {
+  color: #333; /* Ensure text color is consistent */
+}
+
+/* JSON syntax highlighting customization */
+.blog-post-content pre code .hljs-attr,
+.blog-post-content pre code .hljs-property {
+  color: #0550ae; /* Blue for properties/keys */
+}
+
+.blog-post-content pre code .hljs-string {
+  color: #0a3069; /* Darker blue for strings */
+}
+
+.blog-post-content pre code .hljs-literal,
+.blog-post-content pre code .hljs-number,
+.blog-post-content pre code .hljs-boolean {
+  color: #0550ae; /* Blue for numbers and booleans */
+}
+
+.blog-post-content pre code .hljs-punctuation {
+  color: #24292e; /* Dark gray for punctuation */
+}
+
+.blog-post-content img {
+  max-width: 100%;
+  height: auto;
+  margin: 1rem 0;
+  border-radius: 5px;
+}
+
+/* Comments Section */
+.blog-comments {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-color);
+  background-color: var(--light-color);
+}
+
+.blog-comments h2 {
+  margin-bottom: 1.5rem;
+  color: var(--secondary-color);
+  font-size: 1.5rem;
+}
+
+/* Simple loading text for comments */
+.simple-loading-text {
+  text-align: center;
+  padding: 1rem;
+  color: var(--grey-color);
+  font-style: italic;
+}
+
+/* Giscus container and styling overrides */
+.giscus-container {
+  min-height: 150px; /* Reserve space for comments to prevent layout shifts */
+  width: 100%;
+}
+
+.giscus {
+  margin-top: 1rem;
+  width: 100%;
+  transition: opacity 0.3s ease;
+}
+
+/* Add optimizations for faster loading */
+.giscus-frame {
+  transition: opacity 0.5s ease;
+  width: 100% !important;
+  border: none !important;
+}
+
+/* Hide the GitHub corner icon to improve performance */
+.giscus [data-repo-corner] {
+  display: none !important;
+}
+
+/* Blog Post Page - Mobile Improvements */
+.blog-post {
+  background-color: var(--light-color);
+  padding: 2rem;
+  border-radius: 5px;
+  box-shadow: none;
+  width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+  box-sizing: border-box;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.blog-post-content {
+  line-height: 1.8;
+  font-size: 1rem;
+  max-width: 100%;
+  width: 100%;
+}
+
+.blog-post-content h2,
+.blog-post-content h3,
+.blog-post-content h4 {
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.blog-post-content h3 {
+  margin: 1.3rem 0 0.8rem 0;
+  color: var(--secondary-color);
+}
+
+.blog-post-content h4 {
+  margin: 1.2rem 0 0.7rem 0;
+  color: var(--secondary-color);
+}
+
+.blog-post-content p,
+.blog-post-content ul,
+.blog-post-content ol {
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  margin-bottom: 1.2rem;
+}
+
+.blog-post-content li {
+  margin-left: 1rem;
+}
+
+/* Ensure numbered lists display properly */
+.blog-post-content ol {
+  list-style-position: inside;
+  padding-left: 0;
+}
+
+.blog-post-content ol li {
+  padding-left: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Ensure tables don't break layout on mobile */
+.blog-post-content table {
+  width: 100%;
+  overflow-x: auto;
+  display: block;
+}
+
+/* Responsive blog post styles */
+@media screen and (max-width: 768px) {
+  .blog-layout {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .blog-sidebar {
+    width: 100%;
+    position: sticky;
+    top: 70px; /* Match navbar height */
+    height: auto;
+    max-height: 300px;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
+    margin-right: 0;
+    margin-bottom: 1rem;
+    z-index: 10;
+    background-color: var(--light-color);
+  }
+
+  .blog-main-content {
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+    padding: 0 10px;
+  }
+
+  .blog-post {
+    padding: 1rem;
+    margin: 0;
+    border-radius: 0;
+    width: 100%;
+    max-width: 100% !important; /* Use full width on mobile */
+    box-sizing: border-box;
+    background-color: var(--light-color);
+  }
+
+  /* Hide Table of Contents on mobile */
+  .blog-sidebar {
+    display: none;
+  }
+
+  .toc-header {
+    font-size: 1rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .toc-item {
+    margin-bottom: 0.4rem;
+  }
+
+  .toc-sublist {
+    padding-left: 0.8rem;
+  }
+
+  /* Reduce indentation on mobile */
+  .toc-level-3 {
+    padding-left: 0.5rem;
+  }
+
+  .toc-level-4 {
+    padding-left: 1rem;
+  }
+
+  .toc-level-5, .toc-level-6 {
+    padding-left: 1.5rem;
+  }
+
+  .blog-comments {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+  }
+
+  .blog-comments h2 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+
+  .blog-post-header h1 {
+    font-size: 1.5rem;
+    word-wrap: break-word;
+  }
+
+  .blog-post-content {
+    font-size: 0.95rem;
+    width: 100%;
+    margin: 0;
+    padding: 0 0.5rem;
+    max-width: 100% !important;
+  }
+
+  .blog-post-content h2 {
+    font-size: 1.3rem;
+    padding: 0 0.5rem 0.4rem 0.5rem;
+  }
+
+  .blog-post-content h3 {
+    font-size: 1.2rem;
+    padding: 0 0.5rem;
+  }
+
+  .blog-post-content h4 {
+    font-size: 1.1rem;
+    padding: 0 0.5rem;
+  }
+
+  .blog-post-content ol,
+  .blog-post-content ul {
+    padding-left: 1.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .blog-post-content p {
+    padding: 0 0.5rem;
+    margin-bottom: 1.2rem;
+    text-align: left;
+  }
+
+  /* Improve code block readability on mobile */
+  .blog-post-content pre {
+    padding: 0.75rem;
+    padding-top: 2.5rem; /* Extra space for the copy button */
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+    border-radius: 4px;
+    background-color: #f5f5f5; /* Light gray background for code blocks on mobile */
+  }
+
+  .blog-post-content pre code {
+    font-size: 0.85rem;
+  }
+
+  /* Always show copy button on mobile for better UX */
+  .copy-code-button {
+    opacity: 1;
+    top: 0.3rem;
+    right: 0.3rem;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.75rem;
+    background-color: transparent;
+    color: #999;
+  }
+}

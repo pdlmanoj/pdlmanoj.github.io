@@ -14,12 +14,16 @@ const searchBtn = document.getElementById('search-btn');
 // Function to fetch all blog posts
 async function fetchBlogPosts() {
   try {
-    // Fetch the blog index (will create this file later)
+    // Fetch the blog index
     const response = await fetch('/blogs/index.json');
     if (!response.ok) throw new Error('Failed to load blog index');
 
     const data = await response.json();
     blogPosts = data.posts;
+
+    // Sort blog posts by date (newest first)
+    blogPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
+
     filteredPosts = [...blogPosts];
 
     // Display all blog posts
@@ -102,6 +106,9 @@ function filterBlogPosts(query) {
         (post.tags && post.tags.some(tag => tag.toLowerCase().includes(query)))
       );
     });
+
+    // No need to sort again as the original blogPosts array is already sorted
+    // and we're filtering from that sorted array
   }
 
   displayBlogPosts(filteredPosts);
