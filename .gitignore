@@ -1,24 +1,29 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+# Jekyll build files
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+.jekyll-archives/
 
-node_modules
-dist
-dist-ssr
-*.local
+# Ruby environment normalization
+.bundle/
+vendor/
+.ruby-version
+.ruby-gemset
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# OS specific files
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
