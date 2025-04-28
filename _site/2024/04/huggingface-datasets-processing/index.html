@@ -1,0 +1,649 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.0 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Processing tips of huggingface datasets</title>
+<meta name="description" content="In this blog I will note down some tips to process huggingface datasets">
+
+
+  <meta name="author" content="Manoj Paudel">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Manoj Paudel">
+<meta property="og:title" content="Processing tips of huggingface datasets">
+<meta property="og:url" content="http://localhost:4000/2024/04/huggingface-datasets-processing/">
+
+
+  <meta property="og:description" content="In this blog I will note down some tips to process huggingface datasets">
+
+
+
+
+
+  <meta name="twitter:site" content="@">
+  <meta name="twitter:title" content="Processing tips of huggingface datasets">
+  <meta name="twitter:description" content="In this blog I will note down some tips to process huggingface datasets">
+  <meta name="twitter:url" content="http://localhost:4000/2024/04/huggingface-datasets-processing/">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2024-04-04T00:00:00+05:45">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/2024/04/huggingface-datasets-processing/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Manoj Paudel",
+      "url": "http://localhost:4000/",
+      "sameAs": ["https://twitter.com/","https://www.facebook.com/","https://www.linkedin.com/"]
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Manoj Paudel Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+<link rel="shortcut icon" href="/images/favicon.ico">
+<meta name="theme-color" content="#ffffff">
+<link rel="stylesheet" href="/assets/css/custom.css">
+
+<!-- end custom head snippets -->
+
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+     extensions: ["tex2jax.js"],
+     jax: ["input/TeX", "output/HTML-CSS"],
+     tex2jax: {
+       inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+       displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+       processEscapes: true,
+       preview: 'none'
+     },
+     messageStyle: 'none',
+     "HTML-CSS": { availableFonts: ["TeX"] }
+   });
+
+</script>
+
+<style>
+    .bg-color-red {
+        background-color: #ffebee;
+    }
+
+    .bg-color-green {
+        background-color: #e8f5e9;
+    }
+
+    .bg-color-yellow {
+        background-color: #fff3e0;
+    }
+
+    .bg-color-dark-green {
+        background-color: #c8e6c9;
+    }
+
+    .bg-color-pink {
+        background-color: #ffcdd2;
+    }
+
+    .bg-color-purple {
+        background-color: #c5cae9;
+    }
+
+    .pwc-icon {
+        width: 23px;
+        height: 23px;
+        position: relative;
+        top: 5px;
+        margin-right: 5px;
+    }
+
+</style>
+
+  </head>
+
+  <body class="layout--single wide" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Manoj Paudel
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/archives/"
+                
+                
+              >Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories/"
+                
+                
+              >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >About</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/resume/"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/images/profile.jpeg" alt="Manoj Paudel" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Manoj Paudel</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Data Scientist</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="https://twitter.com/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">Linkedin</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Processing tips of huggingface datasets">
+    <meta itemprop="description" content="In this blog I will note down some tips to process huggingface datasets">
+    <meta itemprop="datePublished" content="2024-04-04T00:00:00+05:45">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/2024/04/huggingface-datasets-processing/" itemprop="url">Processing tips of huggingface datasets
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2024-04-04T00:00:00+05:45">April 4, 2024</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          1 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h2 id="tips-1-take-sample-of-data-from-datasets">Tips-1: Take sample of data from datasets</h2>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">load_dataset</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s">"data_name"</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="s">"split_name"</span><span class="p">)</span>
+
+<span class="c1"># randomize the data
+</span><span class="n">shuffled_dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">sample_size</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="n">sampled_dataset</span> <span class="o">=</span> <span class="n">shuffled_dataset</span><span class="p">[</span><span class="s">'train'</span><span class="p">].</span><span class="n">select</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">sample_size</span><span class="p">))</span>
+
+<span class="c1"># now process this sampled_dataset according to your needs
+</span>
+</code></pre></div></div>
+
+<h2 id="tips-2-apply-map-over-the-datasets">Tips-2: Apply map over the datasets</h2>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">load_dataset</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s">"data_name"</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="s">"split_name"</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">tokenize_data</span><span class="p">(</span><span class="n">example</span><span class="p">):</span>
+  <span class="n">tokens</span> <span class="o">=</span> <span class="n">example</span><span class="p">[</span><span class="s">'text'</span><span class="p">].</span><span class="n">split</span><span class="p">()</span>
+  <span class="n">example</span><span class="p">[</span><span class="s">'tokens'</span><span class="p">]</span> <span class="o">=</span> <span class="n">tokens</span>
+  <span class="k">return</span> <span class="n">example</span>
+  <span class="c1"># you can return a new example dictionary to save momory just like
+</span>  <span class="c1"># return {'tokens': tokens}
+</span>
+<span class="n">num_proc</span> <span class="o">=</span> <span class="mi">10</span> <span class="c1"># number of processing (multiprocessing purpose)
+</span><span class="n">tokenize_dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="n">tokenize_data</span><span class="p">,</span> <span class="n">num_proc</span><span class="o">=</span><span class="n">num_proc</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<h2 id="upload-large-data-to-hub">Upload large data to hub</h2>
+<ul>
+  <li>Load the large datasets</li>
+  <li>
+    <p>Shard and save the datasets to local disk</p>
+
+    <div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">load_dataset</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span>
+    <span class="s">"json"</span><span class="p">,</span>
+    <span class="n">data_files</span><span class="o">=</span><span class="s">"/path/largedata.jsonl"</span><span class="p">,</span>
+    <span class="n">cache_dir</span><span class="o">=</span><span class="s">"/path/cached"</span>
+<span class="p">)</span>
+
+<span class="n">dataset</span><span class="p">.</span><span class="n">save_to_disk</span><span class="p">(</span><span class="s">"/path/mybndatasets"</span><span class="p">,</span> <span class="n">max_shard_size</span><span class="o">=</span><span class="s">"10GB"</span><span class="p">,</span> <span class="n">num_proc</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span>
+
+</code></pre></div>    </div>
+  </li>
+  <li>rename all data files to <code class="language-plaintext highlighter-rouge">train-**-**.arrow</code> format instead of <code class="language-plaintext highlighter-rouge">data-**-**.arrow</code> format</li>
+  <li>clone the huggingface dataset repository and move all the files to <code class="language-plaintext highlighter-rouge">data</code> folder</li>
+  <li>commit and push the datasets</li>
+  <li>
+    <p>Repository directory structure will be following</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>data/
+  train-00000-of-00001.arrow
+  test-00000-of-00001.arrow
+.gitattributes
+  
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h2 id="save-dataset-as-csv">Save dataset as CSV</h2>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">load_dataset</span>
+
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s">'hishab/boolq_bn'</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="s">'validation'</span><span class="p">])</span>
+<span class="n">df</span><span class="p">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s">'test.csv'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="dataset-subset-and-split">Dataset Subset and Split</h2>
+<p>This is the best option for pushing datasets to hub</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">DatasetDict</span>
+<span class="c1"># load datasets from jsonl files
+</span><span class="n">mydata</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">.</span><span class="n">from_json</span><span class="p">(</span>
+    <span class="s">"/path/mydataset/*.jsonl"</span><span class="p">,</span>
+    <span class="n">cache_dir</span><span class="o">=</span><span class="s">"/path/cache_dir"</span>
+<span class="p">)</span>
+<span class="n">mydata2</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">.</span><span class="n">from_json</span><span class="p">(</span>
+    <span class="s">"/path/mydataset2/*.jsonl"</span><span class="p">,</span>
+    <span class="n">cache_dir</span><span class="o">=</span><span class="s">"/path/cache_dir"</span>
+<span class="p">)</span>
+<span class="c1"># now add category and split
+# Create the main dataset dictionary with subsets
+</span><span class="n">mydata_dict</span> <span class="o">=</span> <span class="n">DatasetDict</span><span class="p">({</span>
+    <span class="s">"train"</span><span class="p">:</span> <span class="n">mydata</span>
+<span class="p">})</span>
+
+<span class="n">mydata1_dict</span> <span class="o">=</span> <span class="n">DatasetDict</span><span class="p">({</span>
+    <span class="s">"train"</span><span class="p">:</span> <span class="n">mydata1</span>
+<span class="p">})</span>
+
+<span class="c1"># push to hub
+</span><span class="n">mydata_dict</span><span class="p">.</span><span class="n">push_to_hub</span><span class="p">(</span><span class="s">"sagor/mydata"</span><span class="p">,</span> <span class="n">config_name</span><span class="o">=</span><span class="s">"mydata"</span><span class="p">)</span>
+<span class="n">mydata1_dict</span><span class="p">.</span><span class="n">push_to_hub</span><span class="p">(</span><span class="s">"sagor/mydata"</span><span class="p">,</span> <span class="n">config_name</span><span class="o">=</span><span class="s">"mydata1"</span><span class="p">)</span>
+
+</code></pre></div></div>
+<p>In viewer it will show Subset as the mydata and mydata2 and split for mydata as train</p>
+
+<p>NB: You need to login huggingface by</p>
+
+<p><code class="language-plaintext highlighter-rouge">huggingface-cli login</code></p>
+
+<h2 id="git-lfs-problem-for-jsonl-file">Git LFS problem for JSONL file</h2>
+<p>If you clone repo and push by git then this option might help</p>
+
+<ul>
+  <li>Before adding file <code class="language-plaintext highlighter-rouge">git lfs install</code></li>
+  <li>Also do this <code class="language-plaintext highlighter-rouge">huggingface-cli lfs-enable-largefiles .</code></li>
+  <li>For <code class="language-plaintext highlighter-rouge">JSONL</code> file update .gitattribute file by <code class="language-plaintext highlighter-rouge">git lfs track "*.jsonl"</code></li>
+  <li>Now add, commit and push</li>
+</ul>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#datasets" class="page__taxonomy-item p-category" rel="tag">datasets</a><span class="sep">, </span>
+    
+      <a href="/categories/#large-file-processing" class="page__taxonomy-item p-category" rel="tag">large file processing</a><span class="sep">, </span>
+    
+      <a href="/categories/#python" class="page__taxonomy-item p-category" rel="tag">python</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2024-04-04T00:00:00+05:45">April 4, 2024</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  <h4 class="page__share-title">SHARE ON</h4>
+
+  <a href="https://twitter.com/intent/tweet?via=&text=Processing+tips+of+huggingface+datasets%20http%3A%2F%2Flocalhost%3A4000%2F2024%2F04%2Fhuggingface-datasets-processing%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=300,height=100,toolbar=1,resizable=0'); return false;"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span>Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2F2024%2F04%2Fhuggingface-datasets-processing%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=300,height=100,toolbar=1,resizable=0'); return false;"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span>Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2F2024%2F04%2Fhuggingface-datasets-processing%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=300,height=100,toolbar=1,resizable=0'); return false;"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span>LinkedIn</span></a>
+</section>
+
+
+      
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+  
+      <h4 class="page__comments-title">Comments</h4>
+      <section id="utterances-comments"></section>
+    
+</div>
+
+    
+  </article>
+
+  
+  
+    
+<div class="page__related">
+  
+  <h2 class="page__related-title">You May Also Enjoy</h2>
+  <div class="grid__wrapper">
+    
+      
+  </div>
+</div>
+
+  
+</div>
+
+      
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-copyright" style="text-align: center;">&copy; 2025 Manoj Paudel</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'pdlmanoj/blog-comments');
+    script.setAttribute('issue-term', 'pathname');
+    
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+  </body>
+</html>

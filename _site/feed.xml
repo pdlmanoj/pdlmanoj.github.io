@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2025-04-28T21:36:04+05:45</updated><id>http://localhost:4000/feed.xml</id><title type="html">Manoj Paudel</title><subtitle>I am a DS.</subtitle><author><name>Manoj Paudel</name></author><entry><title type="html">Processing tips of huggingface datasets</title><link href="http://localhost:4000/2024/04/huggingface-datasets-processing/" rel="alternate" type="text/html" title="Processing tips of huggingface datasets" /><published>2024-04-04T00:00:00+05:45</published><updated>2024-04-04T00:00:00+05:45</updated><id>http://localhost:4000/2024/04/huggingface-datasets-processing</id><content type="html" xml:base="http://localhost:4000/2024/04/huggingface-datasets-processing/"><![CDATA[<h2 id="tips-1-take-sample-of-data-from-datasets">Tips-1: Take sample of data from datasets</h2>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">load_dataset</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s">"data_name"</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="s">"split_name"</span><span class="p">)</span>
+
+<span class="c1"># randomize the data
+</span><span class="n">shuffled_dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">sample_size</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="n">sampled_dataset</span> <span class="o">=</span> <span class="n">shuffled_dataset</span><span class="p">[</span><span class="s">'train'</span><span class="p">].</span><span class="n">select</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">sample_size</span><span class="p">))</span>
+
+<span class="c1"># now process this sampled_dataset according to your needs
+</span>
+</code></pre></div></div>
+
+<h2 id="tips-2-apply-map-over-the-datasets">Tips-2: Apply map over the datasets</h2>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">load_dataset</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s">"data_name"</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="s">"split_name"</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">tokenize_data</span><span class="p">(</span><span class="n">example</span><span class="p">):</span>
+  <span class="n">tokens</span> <span class="o">=</span> <span class="n">example</span><span class="p">[</span><span class="s">'text'</span><span class="p">].</span><span class="n">split</span><span class="p">()</span>
+  <span class="n">example</span><span class="p">[</span><span class="s">'tokens'</span><span class="p">]</span> <span class="o">=</span> <span class="n">tokens</span>
+  <span class="k">return</span> <span class="n">example</span>
+  <span class="c1"># you can return a new example dictionary to save momory just like
+</span>  <span class="c1"># return {'tokens': tokens}
+</span>
+<span class="n">num_proc</span> <span class="o">=</span> <span class="mi">10</span> <span class="c1"># number of processing (multiprocessing purpose)
+</span><span class="n">tokenize_dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="n">tokenize_data</span><span class="p">,</span> <span class="n">num_proc</span><span class="o">=</span><span class="n">num_proc</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<h2 id="upload-large-data-to-hub">Upload large data to hub</h2>
+<ul>
+  <li>Load the large datasets</li>
+  <li>
+    <p>Shard and save the datasets to local disk</p>
+
+    <div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">load_dataset</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span>
+    <span class="s">"json"</span><span class="p">,</span>
+    <span class="n">data_files</span><span class="o">=</span><span class="s">"/path/largedata.jsonl"</span><span class="p">,</span>
+    <span class="n">cache_dir</span><span class="o">=</span><span class="s">"/path/cached"</span>
+<span class="p">)</span>
+
+<span class="n">dataset</span><span class="p">.</span><span class="n">save_to_disk</span><span class="p">(</span><span class="s">"/path/mybndatasets"</span><span class="p">,</span> <span class="n">max_shard_size</span><span class="o">=</span><span class="s">"10GB"</span><span class="p">,</span> <span class="n">num_proc</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span>
+
+</code></pre></div>    </div>
+  </li>
+  <li>rename all data files to <code class="language-plaintext highlighter-rouge">train-**-**.arrow</code> format instead of <code class="language-plaintext highlighter-rouge">data-**-**.arrow</code> format</li>
+  <li>clone the huggingface dataset repository and move all the files to <code class="language-plaintext highlighter-rouge">data</code> folder</li>
+  <li>commit and push the datasets</li>
+  <li>
+    <p>Repository directory structure will be following</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>data/
+  train-00000-of-00001.arrow
+  test-00000-of-00001.arrow
+.gitattributes
+  
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h2 id="save-dataset-as-csv">Save dataset as CSV</h2>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">load_dataset</span>
+
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s">'hishab/boolq_bn'</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="s">'validation'</span><span class="p">])</span>
+<span class="n">df</span><span class="p">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s">'test.csv'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="dataset-subset-and-split">Dataset Subset and Split</h2>
+<p>This is the best option for pushing datasets to hub</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">DatasetDict</span>
+<span class="c1"># load datasets from jsonl files
+</span><span class="n">mydata</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">.</span><span class="n">from_json</span><span class="p">(</span>
+    <span class="s">"/path/mydataset/*.jsonl"</span><span class="p">,</span>
+    <span class="n">cache_dir</span><span class="o">=</span><span class="s">"/path/cache_dir"</span>
+<span class="p">)</span>
+<span class="n">mydata2</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">.</span><span class="n">from_json</span><span class="p">(</span>
+    <span class="s">"/path/mydataset2/*.jsonl"</span><span class="p">,</span>
+    <span class="n">cache_dir</span><span class="o">=</span><span class="s">"/path/cache_dir"</span>
+<span class="p">)</span>
+<span class="c1"># now add category and split
+# Create the main dataset dictionary with subsets
+</span><span class="n">mydata_dict</span> <span class="o">=</span> <span class="n">DatasetDict</span><span class="p">({</span>
+    <span class="s">"train"</span><span class="p">:</span> <span class="n">mydata</span>
+<span class="p">})</span>
+
+<span class="n">mydata1_dict</span> <span class="o">=</span> <span class="n">DatasetDict</span><span class="p">({</span>
+    <span class="s">"train"</span><span class="p">:</span> <span class="n">mydata1</span>
+<span class="p">})</span>
+
+<span class="c1"># push to hub
+</span><span class="n">mydata_dict</span><span class="p">.</span><span class="n">push_to_hub</span><span class="p">(</span><span class="s">"sagor/mydata"</span><span class="p">,</span> <span class="n">config_name</span><span class="o">=</span><span class="s">"mydata"</span><span class="p">)</span>
+<span class="n">mydata1_dict</span><span class="p">.</span><span class="n">push_to_hub</span><span class="p">(</span><span class="s">"sagor/mydata"</span><span class="p">,</span> <span class="n">config_name</span><span class="o">=</span><span class="s">"mydata1"</span><span class="p">)</span>
+
+</code></pre></div></div>
+<p>In viewer it will show Subset as the mydata and mydata2 and split for mydata as train</p>
+
+<p>NB: You need to login huggingface by</p>
+
+<p><code class="language-plaintext highlighter-rouge">huggingface-cli login</code></p>
+
+<h2 id="git-lfs-problem-for-jsonl-file">Git LFS problem for JSONL file</h2>
+<p>If you clone repo and push by git then this option might help</p>
+
+<ul>
+  <li>Before adding file <code class="language-plaintext highlighter-rouge">git lfs install</code></li>
+  <li>Also do this <code class="language-plaintext highlighter-rouge">huggingface-cli lfs-enable-largefiles .</code></li>
+  <li>For <code class="language-plaintext highlighter-rouge">JSONL</code> file update .gitattribute file by <code class="language-plaintext highlighter-rouge">git lfs track "*.jsonl"</code></li>
+  <li>Now add, commit and push</li>
+</ul>]]></content><author><name>Manoj Paudel</name></author><category term="python" /><category term="datasets" /><category term="large file processing" /><summary type="html"><![CDATA[In this blog I will note down some tips to process huggingface datasets]]></summary></entry></feed>

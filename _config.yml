@@ -1,0 +1,167 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely edit after that. If you find
+# yourself editing this file very often, consider using Jekyll's data files
+# feature for the data you need to update frequently.
+#
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
+
+# Site settings
+# These are used to personalize your new site. If you look in the HTML files,
+# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
+# You can create any custom variable you would like, and they will be accessible
+# in the templates via {{ site.myvariable }}.
+title: Manoj Paudel
+email: mpsandip123@gmail.com
+description: >- # this means to ignore newlines until "baseurl:"
+  I am a DS.
+url: "https://pdlmanoj.github.io"
+twitter_username: "@username"
+github_username: pdlmanoj
+minimal_mistakes_skin: default # "default", "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
+search: true
+
+# Use for twitter card metadata when your site is shared on Twitter
+# Helps Twitter display rich previews of your content
+twitter:
+  username: ""
+
+# Build settings
+markdown: kramdown
+remote_theme: mmistakes/minimal-mistakes
+
+
+# Outputting
+permalink: /:year/:month/:title/  # Controls the URL structure for your posts
+paginate: 5 # Number of posts to show per page on the home page
+paginate_path: /page:num/
+timezone: Asia/Kathmandu
+
+include:
+  - _pages
+
+# Exclude from processing.
+# The following items will not be processed, by default. Create a custom list
+# to override the default setting.
+# exclude:
+#   - Gemfile
+#   - Gemfile.lock
+#   - node_modules
+#   - vendor/bundle/
+#   - vendor/cache/
+#   - vendor/gems/
+#   - vendor/ruby/
+
+# Plugins (previously gems:)
+plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-feed
+  - jemoji
+  - jekyll-include-cache
+
+# Author Information
+author:
+  name   : "Manoj Paudel"
+  avatar : "images/profile.jpeg" # path of your profile photo
+  bio    : "Data Scientist" # short bio
+  links:
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://twitter.com/"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/"
+    - label: "Linkedin"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/"
+    # - label: "Subscribe"
+    #   icon: "fas fa-fw fa-envelope"
+    #   url: "https://www.getrevue.co/profile/sagorsarker"
+    # - label: "Support"
+    #   icon: "fas fa-fw fa-mug-hot"
+    #   url: "https://www.buymeacoffee.com/sagorsarker"
+    # - label: "Email"
+    #   icon: "fab fa-envelope"
+    #   url: "mailto:brursagor@gmail.com"
+#    - label: "Feed"
+#      icon: "fab fa-fw fa-globe"
+#      url: "/feed.xml"
+
+footer:
+  links:
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://twitter.com/"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/"
+
+# Default Settings
+defaults:
+  # _posts
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+      comments: true
+      share: true
+      related: true
+      show_date: true
+  # _pages
+  - scope:
+      path: "_pages"
+      type: pages
+    values:
+      layout: single
+      author_profile: true
+  # For images
+  - scope:
+      path: "images/"
+    values:
+      image: true
+
+# Archive Settings
+category_archive:
+  type: liquid
+  path: /categories/
+tag_archive:
+  type: liquid
+  path: /tags/
+
+comments:
+  provider: "utterances"
+  utterances:
+    theme: "github-light" # "github-dark"
+    issue_term: "pathname"
+repository: "pdlmanoj/blog-comments"
+
+# google_site_verification: "xETphZ5K1WItiUzH0YMRgZ8njDZlQMcGd_HD3zxGkuI"
+
+# Social Media Settings
+# Used for structured data/SEO to help search engines understand your identity
+# Provides social profile links for search engines to associate with your content
+social:
+  type:  Person
+  name:  Manoj Paudel
+  links:
+    - "https://twitter.com/"
+    - "https://www.facebook.com/"
+    - "https://www.linkedin.com/"
+
+# Analytics Settings
+# Configures Google Analytics for tracking site visitors
+# tracking_id: Your Google Analytics ID
+# anonymize_ip: Option to anonymize visitor IP addresses for privacy
+
+analytics:
+  provider: "google-gtag"
+  google:
+    tracking_id: "UA-89627933-1"
+    anonymize_ip: false
