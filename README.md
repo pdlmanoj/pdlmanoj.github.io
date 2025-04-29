@@ -1,40 +1,59 @@
 # Personal Blog
-This blog clone from [https://github.com/amitness/amitness.github.io](https://github.com/amitness/amitness.github.io) and modified for personal use.
 
-This repository hosts the code for my personal [blog](https://sagorbrur.github.io).
+This is my personal blog built with Jekyll and the Minimal Mistakes theme. Visit the live site at [https://pdlmanoj.com.np](https://pdlmanoj.com.np).
 
-The website is powered by [Jekyll](https://jekyllrb.com) — a static site generator written in Python — and uses a theme based on [minimal-mistakes](https://mmistakes.github.io/minimal-mistakes).
+## Features
 
+- Responsive design using Minimal Mistakes theme
+- Category and tag-based content organization
+- Comments system using Giscus
+- Social media integration
 
-## Running Locally
+## For Local Development
 
-### Fork / Clone the Repo
+### Prerequisites
+- 1. Docker and Docker Compose
+- 2. Alternatively: Ruby, Bundler, and Jekyll
 
-If you haven't already, clone your version of the repo:
+### Running Locally
 
+Clone the repository:
 ```shell
-git clone https://github.com/sagorbrur/sagorbrur.github.io.git
+git clone https://github.com/pdlmanoj/pdlmanoj.github.io.git
 ```
 
-### Preview the Website
-You can serve the generated site so it can be previewed in your browser using Docker:
+#### Option 1: Using Docker
+Start the development server:
+```shell
+docker-compose up
 ```
-# install docker and docker-compose first
-sudo docker-compose up
+
+#### Option 2: Using Ruby/Jekyll
+Install dependencies:
+```shell
+bundle install
 ```
 
-And you should see the blog if you visit [http://localhost:4000](http://localhost:4000).
+Start the development server:
+```shell
+bundle exec jekyll serve --incremental --future
 
-<!-- ## Hosting
+# OR for live (autoreload)
+bundle exec jekyll serve --livereload
+```
 
-This blog is hosted by [GitHub Pages](https://pages.github.com/) and uses [CloudFlare](https://www.cloudflare.com) for CDN and HTTPS. -->
+Visit [http://localhost:4000](http://localhost:4000) to preview the site.
+
+## To add new blog content
+Create new blog posts in the `_posts` directory using the format:
+```
+YYYY-MM-DD-title-of-post.md
+```
 
 ## License
-The source code for generation of the blog is under MIT License. Content is copyrighted.
+
+The source code for this blog is under MIT License. Content is copyrighted.
 
 ## Contact
 
-If you have any questions, you can [email](mailto:brursagor@gmail.com) me.
-
-## Modification Methods
-- [minimal-mistakes docs](https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/)
+If you have any questions, you can [email me](mailto:mpsandip12@gmail.com).

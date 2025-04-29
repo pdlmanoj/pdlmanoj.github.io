@@ -14,11 +14,11 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 title: Manoj Paudel
-email: mpsandip123@gmail.com
+email: mpsandip12@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   I am a DS.
 url: "https://pdlmanoj.github.io"
-twitter_username: "@username"
+twitter_username: "@manoj80013"
 github_username: pdlmanoj
 minimal_mistakes_skin: default # "default", "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 search: true
@@ -26,7 +26,7 @@ search: true
 # Use for twitter card metadata when your site is shared on Twitter
 # Helps Twitter display rich previews of your content
 twitter:
-  username: ""
+  username: "@manoj80013"
 
 # Build settings
 markdown: kramdown
@@ -67,17 +67,20 @@ plugins:
 author:
   name   : "Manoj Paudel"
   avatar : "images/profile.jpeg" # path of your profile photo
-  bio    : "Data Scientist" # short bio
+  bio    : "Aspiring Data Scientist"
+  location : "Kathmandu, Nepal" # short bio
+  email   : mpsandip12@gmail.com
   links:
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/"
+      url: "https://twitter.com/manoj80013"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      url: "https://github.com/"
+      url: "https://github.com/pdlmanoj"
     - label: "Linkedin"
       icon: "fab fa-fw fa-linkedin"
-      url: "https://www.linkedin.com/"
+      url: "https://np.linkedin.com/in/manoj-paudel-873122308"
+    
     # - label: "Subscribe"
     #   icon: "fas fa-fw fa-envelope"
     #   url: "https://www.getrevue.co/profile/sagorsarker"
@@ -87,18 +90,15 @@ author:
     # - label: "Email"
     #   icon: "fab fa-envelope"
     #   url: "mailto:brursagor@gmail.com"
-#    - label: "Feed"
-#      icon: "fab fa-fw fa-globe"
-#      url: "/feed.xml"
 
 footer:
-  links:
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/"
-    - label: "GitHub"
-      icon: "fab fa-fw fa-github"
-      url: "https://github.com/"
+  # links:
+  #   - label: "Twitter"
+  #     icon: "fab fa-fw fa-twitter-square"
+  #     url: "https://twitter.com/"
+  #   - label: "GitHub"
+  #     icon: "fab fa-fw fa-github"
+  #     url: "https://github.com/"
 
 # Default Settings
 defaults:
@@ -135,14 +135,32 @@ tag_archive:
   type: liquid
   path: /tags/
 
+## For comment feature I used giscus
 comments:
-  provider: "utterances"
-  utterances:
-    theme: "github-light" # "github-dark"
-    issue_term: "pathname"
+  provider: "giscus"
+  giscus:
+    repo: "pdlmanoj/blog-comments"
+    repo_id: "R_kgDOOhH6UQ" # change this to your repo id
+    category: "Announcements"
+    category_id: "DIC_kwDOOhH6Uc4Cpjeo" # also change this to your category id
+    mapping: "pathname"
+    input_position: "top"
+    theme: "light"
+    reactions_enabled: "1"
+    lazy: true
 repository: "pdlmanoj/blog-comments"
 
-# google_site_verification: "xETphZ5K1WItiUzH0YMRgZ8njDZlQMcGd_HD3zxGkuI"
+# Google Site Verification proves to Google Search Console that you own the site.
+# 1. Go to Google Search Console.
+# 2. Click “Add Property”.
+# 3. Choose your domain or URL prefix (for example: https://yourdomain.com).
+# 4. Select HTML tag verification.
+# 5. Copy the code (e.g., google_site_verification: "your_code_here") and uncomment it in your config.yml.
+# 6. Deploy your site.
+# 7. Click “Verify” in Search Console.
+
+# Add your code here
+# google_site_verification: ""
 
 # Social Media Settings
 # Used for structured data/SEO to help search engines understand your identity
@@ -151,17 +169,20 @@ social:
   type:  Person
   name:  Manoj Paudel
   links:
-    - "https://twitter.com/"
-    - "https://www.facebook.com/"
-    - "https://www.linkedin.com/"
+    - "https://twitter.com/manoj80013"
+    - "https://np.linkedin.com/in/manoj-paudel-873122308"
+    - "https://github.com/pdlmanoj"
 
-# Analytics Settings
-# Configures Google Analytics for tracking site visitors
+# Google Analytics Settings
+# Google Analytics is a tool to track and analyze who visits
+#  your site and how they interact with it.
+# 1. Go to Google Analytics.
+# 2. Create an account and property.
+# 3. Choose Google Analytics 4 (GA4)
 # tracking_id: Your Google Analytics ID
 # anonymize_ip: Option to anonymize visitor IP addresses for privacy
-
 analytics:
   provider: "google-gtag"
   google:
-    tracking_id: "UA-89627933-1"
+    tracking_id: ""
     anonymize_ip: false

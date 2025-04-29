@@ -3,6 +3,31 @@
 <meta name="theme-color" content="#ffffff">
 <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
 
+<!-- Force all external links to open in new tab -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Get all links on the page
+  const allLinks = document.querySelectorAll('a');
+  
+  allLinks.forEach(link => {
+    // Check if it's an external link (starts with http or https)
+    const href = link.getAttribute('href');
+    if (href && (href.startsWith('http://') || href.startsWith('https://'))) {
+      // Only set target="_blank" for external links
+      link.setAttribute('target', '_blank');
+      link.setAttribute('rel', 'noopener noreferrer');
+    }
+  });
+  
+  // Keep the original code for author links to ensure they're covered
+  const authorLinks = document.querySelectorAll('.author__urls.social-icons a');
+  authorLinks.forEach(link => {
+    link.setAttribute('target', '_blank');
+    link.setAttribute('rel', 'noopener noreferrer');
+  });
+});
+</script>
+
 <!-- end custom head snippets -->
 
 <script type="text/javascript" async
