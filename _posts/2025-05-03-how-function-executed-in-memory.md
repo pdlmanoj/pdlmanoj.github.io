@@ -1,6 +1,6 @@
 ---
 title: "How functions are executed in memory?"
-date: 2024-05-03
+date: 2025-05-03
 # last_modified_at: 
 categories:
   - python
