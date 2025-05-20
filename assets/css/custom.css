@@ -1,27 +1,3 @@
-/* Change base font size from 16px to 14px */
-html {
-  font-size: 14px !important;
-}
-
-/* Adjust responsive font sizes if needed */
-@media (min-width: 48em) {
-  html {
-    font-size: 16px !important; /* Was 18px */
-  }
-}
-
-@media (min-width: 64em) {
-  html {
-    font-size: 18px !important; /* Was 20px */
-  }
-}
-
-@media (min-width: 80em) {
-  html {
-    font-size: 20px !important; /* Was 22px */
-  }
-}
-
 /* Custom styles for social sharing buttons */
 .page__share {
   margin-top: 1.5em;
