@@ -67,7 +67,7 @@ plugins:
 author:
   name   : "Manoj Paudel"
   avatar : "images/profile.jpeg" # path of your profile photo
-  bio    : "Aspiring Data Scientist"
+  bio    : ""
   location : "Kathmandu, Nepal" # short bio
   email   : mpsandip12@gmail.com
   links:
