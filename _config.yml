@@ -16,7 +16,6 @@
 title: Manoj Paudel
 email: mpsandip12@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  I am a DS.
 url: "https://pdlmanoj.github.io"
 twitter_username: "@manoj80013"
 github_username: pdlmanoj
@@ -67,7 +66,7 @@ plugins:
 author:
   name   : "Manoj Paudel"
   avatar : "images/profile.jpeg" # path of your profile photo
-  bio    : ""
+  bio    : "Python Developer"
   location : "Kathmandu, Nepal" # short bio
   email   : mpsandip12@gmail.com
   links:
@@ -83,10 +82,10 @@ author:
     
     # - label: "Subscribe"
     #   icon: "fas fa-fw fa-envelope"
-    #   url: "https://www.getrevue.co/profile/sagorsarker"
+    #   url: ""
     # - label: "Support"
     #   icon: "fas fa-fw fa-mug-hot"
-    #   url: "https://www.buymeacoffee.com/sagorsarker"
+    #   url: ""
     # - label: "Email"
     #   icon: "fab fa-envelope"
     #   url: "mailto:brursagor@gmail.com"
@@ -135,7 +134,7 @@ tag_archive:
   type: liquid
   path: /tags/
 
-## For comment feature I used giscus
+## For comment feature ->  used giscus
 comments:
   provider: "giscus"
   giscus:

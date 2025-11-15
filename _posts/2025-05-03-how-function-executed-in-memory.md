@@ -4,7 +4,6 @@ date: 2025-05-03
 # last_modified_at: 
 categories:
   - python
-  - Memory Management
 
 classes: wide
 # excerpt: 
