@@ -278,11 +278,33 @@ blockquote {
 
 /* Ensure body has top padding for fixed header */
 body {
-  padding-top: 60px !important;
+  padding-top: 80px !important;
 }
 
 .page {
   padding-top: 0 !important;
+}
+
+.page__content {
+  margin-top: 2em !important;
+}
+
+/* Single pages (About, Resume, etc.) */
+.page__inner-wrap {
+  padding-top: 2em !important;
+}
+
+.page__title {
+  margin-top: 0 !important;
+}
+
+/* Archive pages (Posts, Categories) */
+.archive {
+  padding-top: 2em !important;
+}
+
+.archive__item-title {
+  margin-top: 1em !important;
 }
 
 /* Remove any default masthead container constraints */
