@@ -312,3 +312,147 @@ body {
   max-width: 100% !important;
   padding: 0 !important;
 }
+
+/* Force hide sidebar globally on all pages */
+.sidebar {
+  display: none !important;
+}
+
+/* Ensure full width for pages since sidebar is gone */
+.page {
+  width: 100% !important;
+  padding-right: 0 !important;
+}
+
+/* ========================================
+   CUSTOM ABOUT PAGE LAYOUT
+   Matching reference image:
+   - Profile image + social links on left
+   - Bio content on right
+   ======================================== */
+
+.about-page-wrapper {
+  display: flex;
+  gap: 4em;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2em 2em;
+}
+
+/* Re-enable display for the custom about sidebar since we hid the global .sidebar */
+.about-sidebar {
+  display: flex !important;
+  flex: 0 0 280px;
+  flex-direction: column;
+  border-right: 1px solid #e0e0e0;
+  /* Vertical line */
+  padding-right: 2em;
+  align-items: center;
+}
+
+.author-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.author-avatar {
+  width: 200px;
+  height: 200px;
+  border-radius: 12px;
+  object-fit: cover;
+  margin-bottom: 1.5em;
+}
+
+.author-social {
+  display: flex;
+  flex-direction: row;
+  /* Horizontal layout */
+  flex-wrap: wrap;
+  gap: 0.5em;
+  /* Smaller gap */
+  width: 100%;
+  padding-bottom: 1.5em;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.social-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.3em 0.6em;
+  /* Compact padding */
+  font-size: 13px !important;
+  /* Smaller font */
+  font-weight: 500;
+  color: #4a5568 !important;
+  /* Dark gray text */
+  background-color: #fff;
+  /* White background */
+  border: 1px solid #cbd5e0;
+  /* Light gray border */
+  border-radius: 4px;
+  /* Slightly rounded */
+  text-decoration: none !important;
+  transition: all 0.2s ease;
+  line-height: 1.2;
+}
+
+.social-btn:hover {
+  background-color: #f7fafc;
+  border-color: #a0aec0;
+  color: #2d3748 !important;
+}
+
+.social-btn i {
+  font-size: 14px;
+  /* Smaller icon */
+  width: auto;
+  color: #4a5568;
+}
+
+.about-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.about-greeting {
+  font-size: 32px !important;
+  font-weight: 700 !important;
+  color: #212529 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0.8em !important;
+  line-height: 1.2 !important;
+}
+
+.about-text {
+  font-size: 18px !important;
+  line-height: 1.7 !important;
+  color: #212529 !important;
+}
+
+.about-text p {
+  margin-bottom: 1.2em !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .about-page-wrapper {
+    flex-direction: column;
+    gap: 2em;
+  }
+
+  .about-sidebar {
+    flex: 0 0 auto;
+  }
+
+  .author-avatar {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+/* Hide footer globally */
+.page__footer {
+  display: none !important;
+}

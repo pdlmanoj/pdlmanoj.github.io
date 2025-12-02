@@ -1,0 +1,42 @@
+---
+layout: default
+---
+
+<div class="about-page-wrapper">
+    <div class="about-sidebar">
+        <div class="author-profile">
+            {% if site.author.avatar %}
+            <img src="{{ site.author.avatar | relative_url }}" alt="{{ site.author.name }}" class="author-avatar">
+            {% endif %}
+
+            <div class="profile-separator"></div>
+
+            <div class="author-social">
+                {% if site.author.links %}
+                {% for link in site.author.links %}
+                <a href="{{ link.url }}" target="_blank" class="social-btn">
+                    <i class="{{ link.icon }}"></i> {{ link.label | downcase }}
+                </a>
+                {% endfor %}
+                {% endif %}
+
+                {% if site.author.email %}
+                <a href="mailto:{{ site.author.email }}" class="social-btn">
+                    <i class="fas fa-envelope"></i> email
+                </a>
+                {% elsif site.email %}
+                <a href="mailto:{{ site.email }}" class="social-btn">
+                    <i class="fas fa-envelope"></i> email
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="about-content">
+        <h1 class="about-greeting">Hi, I'm {{ site.author.name }}</h1>
+        <div class="about-text">
+            {{ content }}
+        </div>
+    </div>
+</div>
