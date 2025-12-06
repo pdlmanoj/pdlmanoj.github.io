@@ -456,3 +456,351 @@ body {
 .page__footer {
   display: none !important;
 }
+
+/* ========================================
+   SHARE SECTION STYLING
+   Modern, clean share buttons
+   ======================================== */
+
+.page__share {
+  margin-top: 3em;
+  padding-top: 2em;
+  border-top: 1px solid #e0e0e0;
+}
+
+.page__share-title {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #555 !important;
+  margin-bottom: 1em !important;
+}
+
+.share-buttons {
+  display: flex;
+  gap: 0.75em;
+  flex-wrap: wrap;
+}
+
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.5em 1em;
+  font-size: 14px !important;
+  font-weight: 500;
+  border-radius: 6px;
+  text-decoration: none !important;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.share-btn i {
+  font-size: 16px;
+}
+
+.share-btn span {
+  font-size: 14px;
+}
+
+/* Twitter button */
+.share-btn--twitter {
+  background-color: #1DA1F2;
+  color: #fff !important;
+  border-color: #1DA1F2;
+}
+
+.share-btn--twitter:hover {
+  background-color: #1a8cd8;
+  border-color: #1a8cd8;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(29, 161, 242, 0.3);
+}
+
+/* LinkedIn button */
+.share-btn--linkedin {
+  background-color: #0077B5;
+  color: #fff !important;
+  border-color: #0077B5;
+}
+
+.share-btn--linkedin:hover {
+  background-color: #006399;
+  border-color: #006399;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 119, 181, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .share-buttons {
+    flex-direction: column;
+  }
+
+  .share-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ========================================
+   AMITNESS.COM HOMEPAGE REPLICATION
+   Exact colors, spacing, and typography
+   ======================================== */
+
+/* Homepage Container */
+.home-container {
+  display: flex;
+  gap: 80px;
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+/* Main Blog Feed */
+.blog-feed {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Categories Sidebar (Right Side) */
+.sidebar {
+  flex: 0 0 240px;
+  align-self: flex-start;
+  position: sticky;
+  top: 100px;
+}
+
+.sidebar-title {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  color: #1f2937 !important;
+  margin-bottom: 16px !important;
+  margin-top: 0 !important;
+  letter-spacing: 0.025em;
+}
+
+.sidebar-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 6px 0;
+  line-height: 1.5;
+}
+
+.sidebar-item .cat-name {
+  color: #6b7280;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 400;
+  transition: color 0.15s;
+}
+
+.sidebar-item .cat-name:hover {
+  color: #1f2937;
+}
+
+.sidebar-item .cat-count {
+  color: #9ca3af;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+/* Blog Card - Each Post */
+.blog-card {
+  display: flex;
+  gap: 32px;
+  padding: 40px 0;
+  border-bottom: 1px solid #e5e7eb;
+  align-items: flex-start;
+}
+
+.blog-card:first-child {
+  padding-top: 0;
+}
+
+.blog-card:last-child {
+  border-bottom: none;
+}
+
+/* Date/Time Column (Left) */
+.card-meta-col {
+  flex: 0 0 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.card-date {
+  font-size: 13px;
+  color: #6b7280;
+  font-weight: 400;
+  display: block;
+  line-height: 1.5;
+}
+
+.card-read-time {
+  font-size: 13px;
+  color: #9ca3af;
+  font-weight: 400;
+  display: block;
+  line-height: 1.5;
+}
+
+/* Content Column (Middle) */
+.card-content-col {
+  flex: 1;
+  min-width: 0;
+}
+
+.card-title {
+  font-size: 20px !important;
+  font-weight: 600 !important;
+  margin: 0 0 12px 0 !important;
+  line-height: 1.4 !important;
+  color: #111827 !important;
+  letter-spacing: -0.01em !important;
+}
+
+.card-title a {
+  color: #111827 !important;
+  text-decoration: none !important;
+  transition: color 0.15s;
+}
+
+.card-title a:hover {
+  color: #4b5563 !important;
+}
+
+.card-tags {
+  display: none;
+  /* Tags not shown in main feed on amitness.com */
+}
+
+.card-excerpt {
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+  color: #6b7280 !important;
+  margin: 0 !important;
+}
+
+/* Thumbnail Column (Right) */
+.card-thumbnail-col {
+  flex: 0 0 200px;
+}
+
+.card-image-link {
+  display: block;
+  width: 100%;
+  height: 134px;
+  overflow: hidden;
+  border-radius: 4px;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  padding: 8px;
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  transition: transform 0.2s ease;
+}
+
+.card-image-link:hover .card-image {
+  transform: scale(1.03);
+}
+
+/* Placeholder for posts without images */
+.card-image-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+}
+
+.placeholder-icon {
+  font-size: 32px;
+  color: #d1d5db;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.pagination__prev,
+.pagination__next {
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151 !important;
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  text-decoration: none !important;
+  transition: all 0.15s;
+}
+
+.pagination__prev:hover,
+.pagination__next:hover {
+  background-color: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+.pagination__page {
+  font-size: 14px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .home-container {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .sidebar {
+    position: static;
+    flex: 0 0 auto;
+    order: -1;
+    /* Move sidebar above content on mobile */
+  }
+}
+
+@media (max-width: 768px) {
+  .blog-card {
+    flex-direction: column;
+    gap: 16px;
+    padding: 32px 0;
+  }
+
+  .card-meta-col,
+  .card-thumbnail-col {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+
+  .card-image-link {
+    height: 200px;
+  }
+
+  .card-title {
+    font-size: 18px !important;
+  }
+}

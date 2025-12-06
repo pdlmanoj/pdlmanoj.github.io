@@ -4,7 +4,8 @@ date: 2025-05-03
 # last_modified_at: 
 categories:
   - python
-
+header:
+  teaser: /images/interned-example1.png
 classes: wide
 # excerpt: 
 ---

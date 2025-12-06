@@ -1,0 +1,139 @@
+---
+layout: default
+---
+
+<div class="home-container">
+    <div class="blog-feed">
+        {% for post in paginator.posts %}
+        {% assign cats_slugs = post.categories | map: 'slugify' | join: ' ' %}
+
+        <article class="blog-card" data-categories="{{ cats_slugs }}">
+            <!-- 1. Metadata Column (Left) -->
+            <div class="card-meta-col">
+                <time class="card-date">{{ post.date | date: "%b %d, %Y" }}</time>
+                {% if post.read_time != false %}
+                <span class="card-read-time">{{ post.content | number_of_words | divided_by: 180 | plus: 1 }} min</span>
+                {% endif %}
+            </div>
+
+            <!-- 2. Content Column (Middle) -->
+            <div class="card-content-col">
+                <h2 class="card-title">
+                    <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+                </h2>
+
+                {% if post.categories.size > 0 %}
+                <div class="card-tags">
+                    {% for category in post.categories %}
+                    <span class="tag">{{ category }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                {% if post.excerpt %}
+                <p class="card-excerpt">{{ post.excerpt | strip_html | truncate: 160 }}</p>
+                {% endif %}
+            </div>
+
+            <!-- 3. Thumbnail Column (Right) -->
+            <div class="card-thumbnail-col">
+                {% assign post_image = post.header.teaser | default: post.header.image | default:
+                post.header.overlay_image %}
+                {% if post_image %}
+                <a href="{{ post.url | relative_url }}" class="card-image-link">
+                    <img src="{{ post_image | relative_url }}" alt="{{ post.title }}" class="card-image" loading="lazy">
+                </a>
+                {% else %}
+                <a href="{{ post.url | relative_url }}" class="card-image-link card-image-placeholder">
+                    <div class="placeholder-icon">
+                        <i class="fas fa-image"></i>
+                    </div>
+                </a>
+                {% endif %}
+            </div>
+        </article>
+        {% endfor %}
+
+        <!-- Pagination -->
+        {% if paginator.total_pages > 1 %}
+        <nav class="pagination">
+            {% if paginator.previous_page %}
+            <a href="{{ paginator.previous_page_path | relative_url }}" class="pagination__prev">← Newer</a>
+            {% endif %}
+            <span class="pagination__page">Page {{ paginator.page }} of {{ paginator.total_pages }}</span>
+            {% if paginator.next_page %}
+            <a href="{{ paginator.next_page_path | relative_url }}" class="pagination__next">Older →</a>
+            {% endif %}
+        </nav>
+        {% endif %}
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <h3 class="sidebar-title">Categories</h3>
+        <ul class="sidebar-list">
+            <li class="sidebar-item">
+                <a href="/" class="cat-name">All</a>
+                <span class="cat-count">({{ site.posts.size }})</span>
+            </li>
+            {% for category in site.categories %}
+            <li class="sidebar-item">
+                <a href="?category={{ category[0] | slugify }}" class="cat-name">{{ category[0] }}</a>
+                <span class="cat-count">({{ category[1].size }})</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </aside>
+</div>
+
+<!-- Category Filtering JavaScript -->
+<script>
+    (function () {
+        function initCategoryFilter() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const activeCategory = urlParams.get('category');
+
+            // Highlight active category
+            const sidebarLinks = document.querySelectorAll('.sidebar-item a');
+            sidebarLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (activeCategory && href.includes(`category=${activeCategory}`)) {
+                    link.style.fontWeight = 'bold';
+                    link.style.color = '#000';
+                } else if (!activeCategory && (href === '/' || href === '/?category=all')) {
+                    link.style.fontWeight = 'bold';
+                    link.style.color = '#000';
+                } else {
+                    link.style.fontWeight = 'normal';
+                    link.style.color = '#333';
+                }
+            });
+
+            // Filter posts
+            if (!activeCategory || activeCategory === 'all') {
+                document.querySelectorAll('.blog-card').forEach(el => el.style.display = 'flex');
+                return;
+            }
+
+            const target = activeCategory.toLowerCase().trim();
+            const cards = document.querySelectorAll('.blog-card');
+
+            cards.forEach(card => {
+                const rawCats = card.getAttribute('data-categories') || '';
+                const cats = rawCats.trim().split(/\s+/);
+
+                if (cats.includes(target)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initCategoryFilter);
+        } else {
+            initCategoryFilter();
+        }
+    })();
+</script>
