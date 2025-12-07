@@ -1,38 +1,40 @@
-<!-- start custom head snippets -->
-<link rel="shortcut icon" href="/images/favicon.ico">
+<!-- Favicon for all browsers -->
+<link rel="shortcut icon" href="{{ '/images/favicon.ico?v=2' | absolute_url }}">
+<link rel="icon" type="image/x-icon" href="{{ '/images/favicon.ico?v=2' | absolute_url }}">
+<link rel="apple-touch-icon" href="{{ '/images/favicon.ico?v=2' | absolute_url }}">
 <meta name="theme-color" content="#ffffff">
 <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
 
 <!-- Force all external links to open in new tab -->
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Get all links on the page
-  const allLinks = document.querySelectorAll('a');
-  
-  allLinks.forEach(link => {
-    // Check if it's an external link (starts with http or https)
-    const href = link.getAttribute('href');
-    if (href && (href.startsWith('http://') || href.startsWith('https://'))) {
-      // Only set target="_blank" for external links
+  document.addEventListener('DOMContentLoaded', function () {
+    // Get all links on the page
+    const allLinks = document.querySelectorAll('a');
+
+    allLinks.forEach(link => {
+      // Check if it's an external link (starts with http or https)
+      const href = link.getAttribute('href');
+      if (href && (href.startsWith('http://') || href.startsWith('https://'))) {
+        // Only set target="_blank" for external links
+        link.setAttribute('target', '_blank');
+        link.setAttribute('rel', 'noopener noreferrer');
+      }
+    });
+
+    // Keep the original code for author links to ensure they're covered
+    const authorLinks = document.querySelectorAll('.author__urls.social-icons a');
+    authorLinks.forEach(link => {
       link.setAttribute('target', '_blank');
       link.setAttribute('rel', 'noopener noreferrer');
-    }
+    });
   });
-  
-  // Keep the original code for author links to ensure they're covered
-  const authorLinks = document.querySelectorAll('.author__urls.social-icons a');
-  authorLinks.forEach(link => {
-    link.setAttribute('target', '_blank');
-    link.setAttribute('rel', 'noopener noreferrer');
-  });
-});
 </script>
 
 <!-- end custom head snippets -->
 
 <script type="text/javascript" async
-        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML">
-</script>
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML">
+  </script>
 
 <script type="text/x-mathjax-config">
    MathJax.Hub.Config({
@@ -51,36 +53,35 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <style>
-    .bg-color-red {
-        background-color: #ffebee;
-    }
+  .bg-color-red {
+    background-color: #ffebee;
+  }
 
-    .bg-color-green {
-        background-color: #e8f5e9;
-    }
+  .bg-color-green {
+    background-color: #e8f5e9;
+  }
 
-    .bg-color-yellow {
-        background-color: #fff3e0;
-    }
+  .bg-color-yellow {
+    background-color: #fff3e0;
+  }
 
-    .bg-color-dark-green {
-        background-color: #c8e6c9;
-    }
+  .bg-color-dark-green {
+    background-color: #c8e6c9;
+  }
 
-    .bg-color-pink {
-        background-color: #ffcdd2;
-    }
+  .bg-color-pink {
+    background-color: #ffcdd2;
+  }
 
-    .bg-color-purple {
-        background-color: #c5cae9;
-    }
+  .bg-color-purple {
+    background-color: #c5cae9;
+  }
 
-    .pwc-icon {
-        width: 23px;
-        height: 23px;
-        position: relative;
-        top: 5px;
-        margin-right: 5px;
-    }
-
+  .pwc-icon {
+    width: 23px;
+    height: 23px;
+    position: relative;
+    top: 5px;
+    margin-right: 5px;
+  }
 </style>

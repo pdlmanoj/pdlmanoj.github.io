@@ -5,7 +5,7 @@ date: 2025-05-03
 categories:
   - python
 header:
-  teaser: /images/interned-example1.png
+  teaser: /images/function-memory-2.png
 classes: wide
 # excerpt: 
 ---

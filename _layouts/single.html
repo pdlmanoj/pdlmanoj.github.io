@@ -70,8 +70,7 @@ layout: default
           {% include comments.html %}
           {% endif %}
 
-          {% include post_pagination.html %}
-        </div>
+        </div>{% comment %}<!-- end .post-main-column -->{% endcomment %}
 
         {% if page.toc != false %}
         <aside class="toc-sidebar">
@@ -85,14 +84,5 @@ layout: default
     </div>
   </article>
 
-  {% comment %}<!-- only show related on a post page when `related: true` -->{% endcomment %}
-  {% if page.id and page.related and site.related_posts.size > 0 %}
-  {% include page__related.html posts=site.related_posts %}
-  {% comment %}<!-- otherwise show recent posts if no related when `related: true` -->{% endcomment %}
-  {% elsif page.id and page.related %}
-  {% include page__related.html posts=site.posts %}
-  {% endif %}
-</div>
-
-<script src="/assets/js/toc.js"></script>
-<script src="/assets/js/header-scroll.js"></script>
+  <script src="/assets/js/toc.js"></script>
+  <script src="/assets/js/header-scroll.js"></script>

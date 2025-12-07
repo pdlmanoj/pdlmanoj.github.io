@@ -366,7 +366,7 @@ body {
 .author-profile {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .author-avatar {
@@ -381,12 +381,12 @@ body {
   display: flex;
   flex-direction: row;
   /* Horizontal layout */
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 0.5em;
   /* Smaller gap */
   width: 100%;
   padding-bottom: 1.5em;
-  border-bottom: 1px solid #e0e0e0;
+  /* border-bottom: 1px solid #e0e0e0; <-- Removed as requested */
 }
 
 .social-btn {
@@ -565,7 +565,8 @@ body {
 /* Homepage Container */
 .home-container {
   display: flex;
-  gap: 80px;
+  gap: 100px;
+  /* Increased from 80px to move sidebar right */
   max-width: 1140px;
   margin: 0 auto;
   padding: 40px 20px;
@@ -653,16 +654,19 @@ body {
 
 .card-date {
   font-size: 13px;
-  color: #6b7280;
-  font-weight: 400;
+  color: #1f2937;
+  /* Darker gray (Gray-800) */
+  font-weight: 500;
+  /* Increased weight slightly for better legibility */
   display: block;
   line-height: 1.5;
 }
 
 .card-read-time {
   font-size: 13px;
-  color: #9ca3af;
-  font-weight: 400;
+  color: #374151;
+  /* Dark gray (Gray-700) - slightly lighter than date but strictly visible */
+  font-weight: 500;
   display: block;
   line-height: 1.5;
 }
@@ -693,8 +697,35 @@ body {
 }
 
 .card-tags {
-  display: none;
-  /* Tags not shown in main feed on amitness.com */
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  /* Space before excerpt */
+  flex-wrap: wrap;
+}
+
+.card-tags .tag {
+  display: inline-block;
+  border: 1px solid #d1d5db;
+  /* Light gray border */
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #6b7280;
+  /* Muted text */
+  letter-spacing: 0.05em;
+  background-color: transparent;
+  font-weight: 500;
+  text-decoration: none !important;
+  /* Remove underline */
+  transition: all 0.2s ease;
+}
+
+.card-tags .tag:hover {
+  border-color: #9ca3af;
+  color: #374151;
+  background-color: #f3f4f6;
 }
 
 .card-excerpt {
@@ -715,9 +746,9 @@ body {
   height: 134px;
   overflow: hidden;
   border-radius: 4px;
-  background-color: #ffffff;
-  border: 1px solid #e5e7eb;
-  padding: 8px;
+  background-color: transparent;
+  border: none;
+  padding: 0;
 }
 
 .card-image {
@@ -749,36 +780,50 @@ body {
 /* Pagination */
 .pagination {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
+  /* Right align */
   align-items: center;
   margin-top: 48px;
   padding-top: 32px;
-  border-top: 1px solid #e5e7eb;
+  gap: 8px;
+  /* Space between buttons */
+  /* border-top: 1px solid #e5e7eb;  <-- Removed to fix double line issue */
 }
 
-.pagination__prev,
-.pagination__next {
-  padding: 8px 16px;
+.pagination-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  padding: 0 8px;
   font-size: 14px;
   font-weight: 500;
-  color: #374151 !important;
-  background-color: #f9fafb;
-  border: 1px solid #e5e7eb;
+  color: #374151;
+  background-color: #fff;
+  border: 1px solid #d1d5db;
   border-radius: 6px;
   text-decoration: none !important;
-  transition: all 0.15s;
+  transition: all 0.15s ease;
 }
 
-.pagination__prev:hover,
-.pagination__next:hover {
+.pagination-btn:hover:not(.active):not(.disabled) {
   background-color: #f3f4f6;
-  border-color: #d1d5db;
+  border-color: #9ca3af;
+  color: #111827;
 }
 
-.pagination__page {
-  font-size: 14px;
-  color: #6b7280;
-  font-weight: 500;
+.pagination-btn.active {
+  background-color: #1f2937;
+  /* Dark active state */
+  color: #fff;
+  border-color: #1f2937;
+}
+
+.pagination-btn.disabled {
+  opacity: 0.5;
+  cursor: default;
+  background-color: #f9fafb;
 }
 
 /* Responsive Design */
@@ -793,6 +838,11 @@ body {
     flex: 0 0 auto;
     order: -1;
     /* Move sidebar above content on mobile */
+  }
+
+  .pagination {
+    justify-content: center;
+    /* Center on mobile */
   }
 }
 

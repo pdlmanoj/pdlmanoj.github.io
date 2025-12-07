@@ -26,7 +26,7 @@ layout: default
                 {% if post.categories.size > 0 %}
                 <div class="card-tags">
                     {% for category in post.categories %}
-                    <span class="tag">{{ category }}</span>
+                    <a href="?category={{ category | slugify }}" class="tag">{{ category }}</a>
                     {% endfor %}
                 </div>
                 {% endif %}
@@ -56,10 +56,8 @@ layout: default
         {% endfor %}
 
         <!-- Client-Side Pagination Controls -->
-        <nav class="pagination" id="js-pagination" style="display: none;">
-            <a href="#" class="pagination__prev" id="btn-prev" style="display: none;">← Newer</a>
-            <span class="pagination__page" id="page-info"></span>
-            <a href="#" class="pagination__next" id="btn-next" style="display: none;">Older →</a>
+        <nav class="pagination" id="js-pagination" style="display: none; justify-content: flex-end; gap: 5px;">
+            <!-- Buttons specific to the new logic will be injected here -->
         </nav>
     </div>
 
@@ -100,18 +98,6 @@ layout: default
 
             // 3. Initial Render
             renderPage(1);
-
-            // 4. Setup Event Listeners
-            document.getElementById('btn-prev').addEventListener('click', (e) => {
-                e.preventDefault();
-                if (currentPage > 1) renderPage(currentPage - 1);
-            });
-
-            document.getElementById('btn-next').addEventListener('click', (e) => {
-                e.preventDefault();
-                const totalPages = Math.ceil(filteredCards.length / POSTS_PER_PAGE);
-                if (currentPage < totalPages) renderPage(currentPage + 1);
-            });
         }
 
         function updateSidebar(activeCategory) {
@@ -164,25 +150,63 @@ layout: default
             // Show current page cards
             pageCards.forEach(card => card.style.display = 'flex');
 
-            // Update Controls
+            renderPaginationControls(totalPages);
+            // Scroll to top of feed on change
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderPaginationControls(totalPages) {
             const nav = document.getElementById('js-pagination');
-            const btnPrev = document.getElementById('btn-prev');
-            const btnNext = document.getElementById('btn-next');
-            const info = document.getElementById('page-info');
+            nav.innerHTML = '';
 
             if (filteredCards.length === 0) {
                 nav.style.display = 'none';
-                // Optional: Show "No posts found" message
-            } else {
-                nav.style.display = 'flex';
-                info.textContent = `Page ${currentPage} of ${totalPages}`;
+                return;
+            }
+            nav.style.display = 'flex';
 
-                btnPrev.style.display = currentPage > 1 ? 'block' : 'none';
-                btnNext.style.display = currentPage < totalPages ? 'block' : 'none';
+            // Only show pagination if more than 1 page
+            if (totalPages <= 1) return;
+
+            // Helper to create button
+            const createBtn = (text, page, isActive = false, isDisabled = false) => {
+                const btn = document.createElement('a');
+                btn.href = '#';
+                btn.className = `pagination-btn ${isActive ? 'active' : ''}`;
+                btn.textContent = text;
+                if (isDisabled) {
+                    btn.classList.add('disabled');
+                    btn.style.pointerEvents = 'none';
+                    btn.style.opacity = '0.5';
+                }
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (!isActive && !isDisabled) renderPage(page);
+                });
+                return btn;
+            };
+
+            // Prev Button
+            nav.appendChild(createBtn('←', currentPage - 1, false, currentPage === 1));
+
+            // Logic to show: 1, 2, 3 ... or sliding window
+            // User asked for: 1, 2, 3 first, then 1 page increment
+            // We'll show a window of 3 pages centered on current if possible
+
+            let startPage = Math.max(1, currentPage - 1);
+            let endPage = Math.min(totalPages, startPage + 2);
+
+            // Adjust if we are at the end
+            if (endPage === totalPages) {
+                startPage = Math.max(1, endPage - 2);
             }
 
-            // Scroll to top of feed on change
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            for (let i = startPage; i <= endPage; i++) {
+                nav.appendChild(createBtn(i, i, i === currentPage));
+            }
+
+            // Next Button
+            nav.appendChild(createBtn('→', currentPage + 1, false, currentPage === totalPages));
         }
 
         if (document.readyState === 'loading') {
