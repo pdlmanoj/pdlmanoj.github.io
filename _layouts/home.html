@@ -66,7 +66,7 @@ layout: default
         <h3 class="sidebar-title">Categories</h3>
         <ul class="sidebar-list">
             <li class="sidebar-item">
-                <a href="/" class="cat-name">All</a>
+                <a href="{{ '/' | relative_url }}" class="cat-name">All</a>
                 <span class="cat-count">({{ site.posts.size }})</span>
             </li>
             {% for category in site.categories %}
