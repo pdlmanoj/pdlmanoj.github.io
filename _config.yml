@@ -15,7 +15,8 @@
 # in the templates via {{ site.myvariable }}.
 title: Manoj Paudel
 email: mpsandip12@gmail.com
-description: >- # this means to ignore newlines until "baseurl:"
+description: "Python Developer"
+baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://pdlmanoj.github.io"
 twitter_username: "@manoj80013"
 github_username: pdlmanoj
