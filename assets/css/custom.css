@@ -804,3 +804,159 @@ body {
     font-size: 18px !important;
   }
 }
+
+/* ========================================
+   BLOG POST TWO-COLUMN LAYOUT - FIXED
+   ======================================== */
+
+/* Relax the default constraints of the theme to allow wider layout */
+.page__inner-wrap {
+  width: 100% !important;
+  max-width: 1400px !important;
+  /* Make room for 2 columns */
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding: 2em !important;
+  box-sizing: border-box !important;
+}
+
+.post-layout-container {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+  align-items: stretch !important;
+  /* Key fix for sticky sidebar */
+  width: 100% !important;
+  gap: 40px !important;
+}
+
+.post-content {
+  flex: 1 1 auto !important;
+  /* Grow and shrink */
+  min-width: 0 !important;
+  /* CSS Grid/Flex blowout fix */
+  max-width: 950px !important;
+  /* Increased reading width */
+  margin-right: auto !important;
+  /* Push content to logic left if extra space */
+}
+
+/* Ensure images don't overflow */
+.post-content img {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+.toc-sidebar {
+  flex: 0 0 220px !important;
+  /* Compact width */
+  display: none;
+  position: relative;
+}
+
+@media (min-width: 1280px) {
+  .toc-sidebar {
+    display: block !important;
+  }
+}
+
+.toc-wrapper {
+  position: sticky !important;
+  top: 100px !important;
+  max-height: calc(100vh - 120px) !important;
+  overflow-y: auto !important;
+  padding-left: 20px !important;
+  border-left: 2px solid #e2e8f0 !important;
+}
+
+/* TOC Styling */
+.nav__title {
+  margin-top: 0;
+  font-size: 0.75rem;
+  /* Reduced per request */
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #a0aec0;
+  margin-bottom: 0.8rem;
+}
+
+.toc-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.toc-item {
+  margin-bottom: 0.35rem;
+}
+
+.toc-item-h1 {
+  font-weight: 700;
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  /* Smaller H1 */
+}
+
+.toc-item-h2 {
+  font-weight: normal;
+  font-size: 0.75rem;
+  /* Smaller H2 */
+  margin-left: 0.5rem;
+}
+
+.toc-link {
+  color: #718096 !important;
+  text-decoration: none !important;
+  display: block;
+  border-left: 3px solid transparent;
+  padding-left: 10px;
+  transition: all 0.2s;
+
+  /* Single line truncation logic (Re-applied) */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.toc-link:hover {
+  color: #2d3748 !important;
+  border-left-color: #cbd5e0;
+}
+
+.toc-link.active {
+  color: #186241 !important;
+  /* Primary green */
+  font-weight: 600;
+  border-left-color: #186241;
+}
+
+/* Responsive: Mobile/Tablet */
+@media (max-width: 1279px) {
+  .post-layout-container {
+    flex-direction: column !important;
+    gap: 20px !important;
+  }
+
+  .toc-sidebar {
+    display: block !important;
+    /* Show TOC on top */
+    width: 100% !important;
+    flex: none !important;
+    background: #f7fafc;
+    border: 1px solid #edf2f7;
+    border-radius: 8px;
+    padding: 1rem;
+  }
+
+  .toc-wrapper {
+    position: static !important;
+    border: none !important;
+    padding: 0 !important;
+    max-height: none !important;
+  }
+
+  .post-content {
+    max-width: 100% !important;
+  }
+}
