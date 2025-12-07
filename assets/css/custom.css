@@ -204,6 +204,13 @@ blockquote {
   background-color: #2c3136 !important;
   border-bottom: 1px solid #3a3f47 !important;
   padding: 0 !important;
+  transition: transform 0.3s ease-in-out !important;
+  /* Smooth sliding */
+}
+
+/* Class to hide header on scroll down */
+.masthead.scroll-hide {
+  transform: translateY(-100%) !important;
 }
 
 .masthead__inner-wrap {
@@ -826,11 +833,12 @@ body {
   justify-content: space-between !important;
   align-items: stretch !important;
   /* Key fix for sticky sidebar */
-  width: 100% !important;
-  gap: 40px !important;
+  width: 110% !important;
+  gap: 85px !important;
+  /* Increased gap again to move TOC further right */
 }
 
-.post-content {
+.post-main-column {
   flex: 1 1 auto !important;
   /* Grow and shrink */
   min-width: 0 !important;
@@ -839,6 +847,11 @@ body {
   /* Increased reading width */
   margin-right: auto !important;
   /* Push content to logic left if extra space */
+}
+
+.post-content {
+  /* Content inside the column */
+  width: 100%;
 }
 
 /* Ensure images don't overflow */
@@ -863,17 +876,28 @@ body {
 .toc-wrapper {
   position: sticky !important;
   top: 100px !important;
+  /* Default when header is visible */
   max-height: calc(100vh - 120px) !important;
   overflow-y: auto !important;
   padding-left: 20px !important;
   border-left: 2px solid #e2e8f0 !important;
+  transition: top 0.3s ease-in-out !important;
+  /* Smooth transition */
+}
+
+/* When header is hidden, move TOC up */
+body.header-hidden .toc-wrapper {
+  top: 30px !important;
+  /* Moved up to fill gap */
+  max-height: calc(100vh - 50px) !important;
+  /* More breathing room */
 }
 
 /* TOC Styling */
 .nav__title {
   margin-top: 0;
-  font-size: 0.75rem;
-  /* Reduced per request */
+  font-size: 0.7rem;
+  /* Reduced font size again */
   letter-spacing: 1px;
   text-transform: uppercase;
   color: #a0aec0;
@@ -886,22 +910,68 @@ body {
   list-style: none;
 }
 
+/* Nested TOC Styling */
+.toc-list ul,
+.toc-sublist {
+  display: none;
+  /* Hide sub-items by default */
+  list-style: none;
+  padding-left: 0.8rem;
+  /* Indent sub-items */
+  margin: 0;
+  border-left: 2px solid #edf2f7;
+  /* Visual usage guide line for nested items */
+  margin-left: 2px;
+}
+
+/* Show sublist if parent is open or active */
+.toc-item.open-parent>.toc-sublist,
+.toc-item.active-item>.toc-sublist {
+  display: block;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .toc-item {
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.2rem;
 }
 
-.toc-item-h1 {
-  font-weight: 700;
-  margin-top: 1rem;
-  font-size: 0.8rem;
-  /* Smaller H1 */
-}
-
+/* Reset specific indentations since we use nesting now */
+.toc-item-h1,
 .toc-item-h2 {
-  font-weight: normal;
+  margin-left: 0;
+  /* Font sizes kept small per user request */
+}
+
+/* Title Font: 0.7rem, Links: 0.75-0.8rem */
+.toc-item-h1>.toc-link {
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin-top: 0.8rem;
+}
+
+.toc-item-h2>.toc-link {
   font-size: 0.75rem;
-  /* Smaller H2 */
-  margin-left: 0.5rem;
+  font-weight: normal;
+}
+
+/* H3 inside nested list does not need extra margin left on the LI itself, 
+   as the UL has padding. But we can ensure font size is correct. */
+.toc-item-h3>.toc-link {
+  font-size: 0.7rem;
+  font-weight: normal;
+  color: #a0aec0 !important;
 }
 
 .toc-link {
@@ -912,7 +982,7 @@ body {
   padding-left: 10px;
   transition: all 0.2s;
 
-  /* Single line truncation logic (Re-applied) */
+  /* Single line */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
