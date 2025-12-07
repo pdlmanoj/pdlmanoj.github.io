@@ -72,13 +72,13 @@ author:
   links:
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/manoj80013"
+      url: "https://x.com/pdlmanoj_"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/pdlmanoj"
     - label: "Linkedin"
       icon: "fab fa-fw fa-linkedin"
-      url: "https://np.linkedin.com/in/manoj-paudel-873122308"
+      url: "https://www.linkedin.com/in/pdlmanoj/"
     
     # - label: "Subscribe"
     #   icon: "fas fa-fw fa-envelope"
@@ -161,8 +161,8 @@ social:
   type:  Person
   name:  Manoj Paudel
   links:
-    - "https://twitter.com/manoj80013"
-    - "https://np.linkedin.com/in/manoj-paudel-873122308"
+    - "https://x.com/pdlmanoj_"
+    - "https://www.linkedin.com/in/pdlmanoj/"
     - "https://github.com/pdlmanoj"
 
 # Google Analytics Settings

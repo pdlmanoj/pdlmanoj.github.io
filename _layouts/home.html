@@ -4,10 +4,11 @@ layout: default
 
 <div class="home-container">
     <div class="blog-feed">
-        {% for post in paginator.posts %}
-        {% assign cats_slugs = post.categories | map: 'slugify' | join: ' ' %}
+        <!-- Loop through ALL posts for client-side filtering/pagination -->
+        {% for post in site.posts %}
+        {% capture cats_slugs %}{% for cat in post.categories %}{{ cat | slugify }} {% endfor %}{% endcapture %}
 
-        <article class="blog-card" data-categories="{{ cats_slugs }}">
+        <article class="blog-card" data-categories="{{ cats_slugs | strip }}" style="display: none;">
             <!-- 1. Metadata Column (Left) -->
             <div class="card-meta-col">
                 <time class="card-date">{{ post.date | date: "%b %d, %Y" }}</time>
@@ -54,18 +55,12 @@ layout: default
         </article>
         {% endfor %}
 
-        <!-- Pagination -->
-        {% if paginator.total_pages > 1 %}
-        <nav class="pagination">
-            {% if paginator.previous_page %}
-            <a href="{{ paginator.previous_page_path | relative_url }}" class="pagination__prev">← Newer</a>
-            {% endif %}
-            <span class="pagination__page">Page {{ paginator.page }} of {{ paginator.total_pages }}</span>
-            {% if paginator.next_page %}
-            <a href="{{ paginator.next_page_path | relative_url }}" class="pagination__next">Older →</a>
-            {% endif %}
+        <!-- Client-Side Pagination Controls -->
+        <nav class="pagination" id="js-pagination" style="display: none;">
+            <a href="#" class="pagination__prev" id="btn-prev" style="display: none;">← Newer</a>
+            <span class="pagination__page" id="page-info"></span>
+            <a href="#" class="pagination__next" id="btn-next" style="display: none;">Older →</a>
         </nav>
-        {% endif %}
     </div>
 
     <!-- Sidebar -->
@@ -86,21 +81,47 @@ layout: default
     </aside>
 </div>
 
-<!-- Category Filtering JavaScript -->
+<!-- Category Filtering & Pagination JavaScript -->
 <script>
     (function () {
-        function initCategoryFilter() {
+        const POSTS_PER_PAGE = 5;
+        let currentPage = 1;
+        let filteredCards = []; // Array of visible DOM elements
+
+        function initApp() {
             const urlParams = new URLSearchParams(window.location.search);
             const activeCategory = urlParams.get('category');
 
-            // Highlight active category
+            // 1. Highlight Sidebar
+            updateSidebar(activeCategory);
+
+            // 2. Filter Posts
+            filteredCards = getFilteredCards(activeCategory);
+
+            // 3. Initial Render
+            renderPage(1);
+
+            // 4. Setup Event Listeners
+            document.getElementById('btn-prev').addEventListener('click', (e) => {
+                e.preventDefault();
+                if (currentPage > 1) renderPage(currentPage - 1);
+            });
+
+            document.getElementById('btn-next').addEventListener('click', (e) => {
+                e.preventDefault();
+                const totalPages = Math.ceil(filteredCards.length / POSTS_PER_PAGE);
+                if (currentPage < totalPages) renderPage(currentPage + 1);
+            });
+        }
+
+        function updateSidebar(activeCategory) {
             const sidebarLinks = document.querySelectorAll('.sidebar-item a');
             sidebarLinks.forEach(link => {
                 const href = link.getAttribute('href');
-                if (activeCategory && href.includes(`category=${activeCategory}`)) {
-                    link.style.fontWeight = 'bold';
-                    link.style.color = '#000';
-                } else if (!activeCategory && (href === '/' || href === '/?category=all')) {
+                const isAll = !activeCategory && (href === '/' || href === '/?category=all');
+                const isMatch = activeCategory && href.includes(`category=${activeCategory}`);
+
+                if (isAll || isMatch) {
                     link.style.fontWeight = 'bold';
                     link.style.color = '#000';
                 } else {
@@ -108,32 +129,66 @@ layout: default
                     link.style.color = '#333';
                 }
             });
+        }
 
-            // Filter posts
-            if (!activeCategory || activeCategory === 'all') {
-                document.querySelectorAll('.blog-card').forEach(el => el.style.display = 'flex');
-                return;
+        function getFilteredCards(category) {
+            const allCards = Array.from(document.querySelectorAll('.blog-card'));
+            const target = category ? category.toLowerCase().trim() : 'all';
+
+            // First, hide EVERYTHING
+            allCards.forEach(card => card.style.display = 'none');
+
+            if (!category || category === 'all') {
+                return allCards;
             }
 
-            const target = activeCategory.toLowerCase().trim();
-            const cards = document.querySelectorAll('.blog-card');
-
-            cards.forEach(card => {
+            return allCards.filter(card => {
                 const rawCats = card.getAttribute('data-categories') || '';
                 const cats = rawCats.trim().split(/\s+/);
-
-                if (cats.includes(target)) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
+                return cats.includes(target);
             });
         }
 
+        function renderPage(page) {
+            currentPage = page;
+            const totalPages = Math.ceil(filteredCards.length / POSTS_PER_PAGE);
+
+            // Hide all first (safety)
+            document.querySelectorAll('.blog-card').forEach(c => c.style.display = 'none');
+
+            // Calculate slice
+            const start = (page - 1) * POSTS_PER_PAGE;
+            const end = start + POSTS_PER_PAGE;
+            const pageCards = filteredCards.slice(start, end);
+
+            // Show current page cards
+            pageCards.forEach(card => card.style.display = 'flex');
+
+            // Update Controls
+            const nav = document.getElementById('js-pagination');
+            const btnPrev = document.getElementById('btn-prev');
+            const btnNext = document.getElementById('btn-next');
+            const info = document.getElementById('page-info');
+
+            if (filteredCards.length === 0) {
+                nav.style.display = 'none';
+                // Optional: Show "No posts found" message
+            } else {
+                nav.style.display = 'flex';
+                info.textContent = `Page ${currentPage} of ${totalPages}`;
+
+                btnPrev.style.display = currentPage > 1 ? 'block' : 'none';
+                btnNext.style.display = currentPage < totalPages ? 'block' : 'none';
+            }
+
+            // Scroll to top of feed on change
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initCategoryFilter);
+            document.addEventListener('DOMContentLoaded', initApp);
         } else {
-            initCategoryFilter();
+            initApp();
         }
     })();
 </script>

@@ -321,8 +321,14 @@ body {
 }
 
 /* Force hide sidebar globally on all pages */
+/* Force hide sidebar globally on all pages ... */
 .sidebar {
   display: none !important;
+}
+
+/* ... BUT show it on the home page (overrides above due to specificity) */
+.home-container .sidebar {
+  display: block !important;
 }
 
 /* Ensure full width for pages since sidebar is gone */
