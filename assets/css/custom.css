@@ -4,6 +4,7 @@
 body {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
   font-size: 18px !important;
+
   line-height: 1.6 !important;
   color: #212529 !important;
   /* Dark gray, almost black */
@@ -278,9 +279,30 @@ blockquote {
   display: none !important;
 }
 
-/* Hide the hamburger menu button */
-.greedy-nav__toggle {
-  display: none !important;
+/* Hide the hamburger menu button only on desktop */
+@media (min-width: 1024px) {
+  .greedy-nav__toggle {
+    display: none !important;
+  }
+}
+
+/* Show hamburger on mobile/tablet */
+@media (max-width: 1023px) {
+  .greedy-nav__toggle {
+    display: block !important;
+    background: transparent;
+    border: none;
+    color: #e8e8e8;
+  }
+
+  .greedy-nav .visible-links {
+    display: none !important;
+  }
+
+  /* Ensure header doesn't break */
+  .masthead__inner-wrap {
+    padding: 0.5em 1em !important;
+  }
 }
 
 /* Ensure body has top padding for fixed header */
@@ -569,7 +591,20 @@ body {
   /* Increased from 80px to move sidebar right */
   max-width: 1140px;
   margin: 0 auto;
+  margin: 0 auto;
   padding: 40px 20px;
+}
+
+@media (max-width: 768px) {
+  .home-container {
+    flex-direction: column;
+    gap: 30px;
+    padding: 20px 15px;
+  }
+
+  .home-container .sidebar {
+    display: none !important;
+  }
 }
 
 /* Main Blog Feed */
@@ -1084,5 +1119,394 @@ body.header-hidden .toc-wrapper {
 
   .post-content {
     max-width: 100% !important;
+  }
+}
+
+/* ========================================
+   MOBILE RESPONSIVENESS FIXES
+   Fix blog post content overflow on mobile
+   ======================================== */
+
+/* Mobile devices - Critical fixes for content overflow */
+@media (max-width: 768px) {
+
+  /* Fix body padding for smaller screens */
+  body {
+    padding-top: 60px !important;
+  }
+
+  /* Fix page inner wrap to prevent overflow */
+  .page__inner-wrap {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 1em !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Fix post layout container - CRITICAL FIX */
+  .post-layout-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    gap: 20px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Fix main column to use full width on mobile */
+  .post-main-column {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Ensure post content doesn't overflow */
+  .post-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Fix all content elements to prevent overflow */
+  .post-content * {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Reduce font size slightly for better mobile readability */
+  body {
+    font-size: 16px !important;
+  }
+
+  .page__content {
+    font-size: 16px !important;
+  }
+
+  /* Fix headings on mobile */
+  .page__title {
+    font-size: 24px !important;
+    line-height: 1.3 !important;
+    word-wrap: break-word !important;
+  }
+
+  .post-content h1 {
+    font-size: 24px !important;
+  }
+
+  .post-content h2 {
+    font-size: 20px !important;
+  }
+
+  .post-content h3 {
+    font-size: 18px !important;
+  }
+
+  /* Fix code blocks for mobile - prevent horizontal overflow */
+  pre {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    box-sizing: border-box !important;
+    font-size: 14px !important;
+    padding: 0.8em !important;
+  }
+
+  code {
+    font-size: 14px !important;
+    word-wrap: break-word !important;
+  }
+
+  /* Inline code should wrap */
+  p code,
+  li code {
+    word-break: break-word !important;
+    white-space: pre-wrap !important;
+  }
+
+  /* Fix images to be responsive */
+  .post-content img {
+    max-width: 100% !important;
+    height: auto !important;
+    display: block !important;
+    margin: 1em auto !important;
+  }
+
+  /* Fix tables to be responsive */
+  .post-content table {
+    display: block !important;
+    width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    margin: 1em 0 !important;
+  }
+
+  /* Fix blockquotes */
+  blockquote {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 1em !important;
+    font-size: 15px !important;
+  }
+
+  /* Fix paragraphs */
+  .post-content p {
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+
+  /* Fix lists */
+  .post-content ul,
+  .post-content ol {
+    padding-left: 1.5em !important;
+    word-wrap: break-word !important;
+  }
+
+  /* Hide TOC sidebar on mobile (already shown at top) */
+  .toc-sidebar {
+    display: none !important;
+  }
+
+  /* Fix share buttons on mobile */
+  .page__share {
+    margin-top: 2em !important;
+    padding-top: 1.5em !important;
+  }
+
+  .share-btn {
+    font-size: 13px !important;
+    padding: 0.4em 0.8em !important;
+  }
+}
+
+/* ========================================
+   GENERAL MOBILE UX IMPROVEMENTS
+   ======================================== */
+
+/* Smooth scrolling site-wide */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Better tap highlight color for mobile */
+* {
+  -webkit-tap-highlight-color: rgba(24, 98, 65, 0.2);
+  /* Primary green with transparency */
+}
+
+/* Ensure all buttons have proper cursor */
+button {
+  cursor: pointer;
+}
+
+/* ========================================
+   ENHANCED MOBILE HAMBURGER MENU
+   Professional design with animations
+   ======================================== */
+
+/* Mobile Navigation Improvements */
+@media (max-width: 1023px) {
+
+  /* Enhanced Hamburger Icon Button */
+  button.greedy-nav__toggle.hidden,
+  button.greedy-nav__toggle {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    background: transparent !important;
+    border: none !important;
+    margin-left: auto !important;
+    padding: 0.5rem !important;
+    cursor: pointer !important;
+
+    /* Larger touch target for better mobile UX */
+    min-width: 48px !important;
+    min-height: 48px !important;
+
+    /* Smooth transitions */
+    transition: all 0.3s ease !important;
+  }
+
+  /* Hamburger icon styling */
+  button.greedy-nav__toggle .navicon {
+    color: #e8e8e8 !important;
+    font-size: 24px !important;
+    transition: transform 0.3s ease, opacity 0.3s ease !important;
+  }
+
+  /* Hover effect for hamburger button */
+  button.greedy-nav__toggle:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 4px !important;
+  }
+
+  /* Active/pressed state */
+  button.greedy-nav__toggle:active {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    transform: scale(0.95) !important;
+  }
+
+  /* When menu is open, rotate icon */
+  button.greedy-nav__toggle.close .navicon {
+    transform: rotate(90deg) !important;
+  }
+
+  /* Force links hidden so toggle is the only way */
+  /* STRATEGY: Use CSS :has() to detect when the toggle is active (class 'close') and show the .visible-links as a dropdown */
+
+  /* 1. Hide visible links by default on mobile */
+  .greedy-nav .visible-links {
+    display: none;
+    visibility: hidden;
+  }
+
+  /* 2. Enhanced dropdown menu when open */
+  .greedy-nav:has(.greedy-nav__toggle.close) .visible-links {
+    display: flex !important;
+    visibility: visible !important;
+    flex-direction: column;
+    position: absolute;
+    top: calc(100% + 8px);
+    /* Slight gap below header */
+    right: 8px;
+    /* Slight margin from edge */
+    width: auto;
+    min-width: 220px;
+    max-width: 280px;
+    height: auto;
+
+    /* Enhanced visual design */
+    background: #2c3136;
+    border: 1px solid #3a3f47;
+    border-radius: 8px;
+    /* More rounded for modern look */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2);
+    /* Layered shadow for depth */
+
+    padding: 8px 0;
+    z-index: 2000;
+    overflow: hidden;
+    /* Clip rounded corners */
+
+    /* Smooth slide-down animation */
+    animation: slideDown 0.3s ease-out forwards;
+    transform-origin: top right;
+
+    /* Optional backdrop blur for premium feel */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  /* Slide down animation */
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px) scale(0.95);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  /* 3. Enhanced list items in dropdown */
+  .greedy-nav:has(.greedy-nav__toggle.close) .visible-links li {
+    display: block;
+    width: 100%;
+    min-width: 0 !important;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    /* Subtle separator */
+  }
+
+  .greedy-nav:has(.greedy-nav__toggle.close) .visible-links li:last-child {
+    border-bottom: none;
+  }
+
+  /* First item rounded top */
+  .greedy-nav:has(.greedy-nav__toggle.close) .visible-links li:first-child a {
+    border-radius: 8px 8px 0 0;
+  }
+
+  /* Last item rounded bottom */
+  .greedy-nav:has(.greedy-nav__toggle.close) .visible-links li:last-child a {
+    border-radius: 0 0 8px 8px;
+  }
+
+  /* Enhanced menu links */
+  .greedy-nav:has(.greedy-nav__toggle.close) .visible-links a {
+    display: flex;
+    align-items: center;
+    padding: 14px 20px;
+    /* Larger touch target */
+    min-height: 48px;
+    /* Minimum tap target size */
+    color: #e8e8e8 !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+
+    /* Smooth transitions */
+    transition: all 0.2s ease !important;
+  }
+
+  /* Hover state with smooth transition */
+  .greedy-nav:has(.greedy-nav__toggle.close) .visible-links a:hover {
+    color: #fff !important;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    text-decoration: none;
+    padding-left: 24px;
+    /* Slight indent on hover */
+  }
+
+  /* Active/pressed state */
+  .greedy-nav:has(.greedy-nav__toggle.close) .visible-links a:active {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    transform: scale(0.98);
+  }
+
+  /* 4. Hide the theme's default hidden-links container on mobile to prevent empty box or duplicates */
+  .greedy-nav .hidden-links {
+    display: none !important;
+  }
+}
+
+
+.greedy-nav .hidden-links li:last-child {
+  border-bottom: none;
+}
+
+.greedy-nav .hidden-links a {
+  display: block;
+  color: #e8e8e8 !important;
+  font-size: 16px !important;
+}
+
+.greedy-nav .hidden-links a:hover {
+  color: #fff !important;
+  background-color: #3a3f47;
+}
+
+/* Ensure header doesn't break */
+.masthead__inner-wrap {
+  padding: 0.5em 1em !important;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

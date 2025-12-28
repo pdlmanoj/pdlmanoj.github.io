@@ -24,6 +24,7 @@ GEM
     base64 (0.2.0)
     benchmark (0.4.0)
     bigdecimal (3.1.9)
+    certified (1.0.0)
     coffee-script (2.4.1)
       coffee-script-source
       execjs
@@ -325,6 +326,7 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
+  certified
   github-pages
   jekyll-algolia
   jekyll-feed
