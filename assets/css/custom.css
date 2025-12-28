@@ -1122,6 +1122,165 @@ body.header-hidden .toc-wrapper {
   }
 }
 
+/* ========================================
+   MOBILE RESPONSIVENESS FIXES
+   Fix blog post content overflow on mobile
+   ======================================== */
+
+/* Mobile devices - Critical fixes for content overflow */
+@media (max-width: 768px) {
+
+  /* Fix body padding for smaller screens */
+  body {
+    padding-top: 60px !important;
+  }
+
+  /* Fix page inner wrap to prevent overflow */
+  .page__inner-wrap {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 1em !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Fix post layout container - CRITICAL FIX */
+  .post-layout-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    gap: 20px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Fix main column to use full width on mobile */
+  .post-main-column {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Ensure post content doesn't overflow */
+  .post-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Fix all content elements to prevent overflow */
+  .post-content * {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Reduce font size slightly for better mobile readability */
+  body {
+    font-size: 16px !important;
+  }
+
+  .page__content {
+    font-size: 16px !important;
+  }
+
+  /* Fix headings on mobile */
+  .page__title {
+    font-size: 24px !important;
+    line-height: 1.3 !important;
+    word-wrap: break-word !important;
+  }
+
+  .post-content h1 {
+    font-size: 24px !important;
+  }
+
+  .post-content h2 {
+    font-size: 20px !important;
+  }
+
+  .post-content h3 {
+    font-size: 18px !important;
+  }
+
+  /* Fix code blocks for mobile - prevent horizontal overflow */
+  pre {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    box-sizing: border-box !important;
+    font-size: 14px !important;
+    padding: 0.8em !important;
+  }
+
+  code {
+    font-size: 14px !important;
+    word-wrap: break-word !important;
+  }
+
+  /* Inline code should wrap */
+  p code,
+  li code {
+    word-break: break-word !important;
+    white-space: pre-wrap !important;
+  }
+
+  /* Fix images to be responsive */
+  .post-content img {
+    max-width: 100% !important;
+    height: auto !important;
+    display: block !important;
+    margin: 1em auto !important;
+  }
+
+  /* Fix tables to be responsive */
+  .post-content table {
+    display: block !important;
+    width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    margin: 1em 0 !important;
+  }
+
+  /* Fix blockquotes */
+  blockquote {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 1em !important;
+    font-size: 15px !important;
+  }
+
+  /* Fix paragraphs */
+  .post-content p {
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+
+  /* Fix lists */
+  .post-content ul,
+  .post-content ol {
+    padding-left: 1.5em !important;
+    word-wrap: break-word !important;
+  }
+
+  /* Hide TOC sidebar on mobile (already shown at top) */
+  .toc-sidebar {
+    display: none !important;
+  }
+
+  /* Fix share buttons on mobile */
+  .page__share {
+    margin-top: 2em !important;
+    padding-top: 1.5em !important;
+  }
+
+  .share-btn {
+    font-size: 13px !important;
+    padding: 0.4em 0.8em !important;
+  }
+}
+
 /* Robust Mobile Hamburger Fix - Appended */
 @media (max-width: 1023px) {
 
